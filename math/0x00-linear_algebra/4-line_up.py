@@ -2,12 +2,13 @@
 """
 This module contains the function add_arrays
 """
-import numpy as np
+
 
 def add_arrays(arr1, arr2):
     """
     Function that adds two arrays
     """
+    import numpy as np
     if len(arr1) != len(arr2):
         return None
     else:
