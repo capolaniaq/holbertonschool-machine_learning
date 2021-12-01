@@ -3,7 +3,6 @@
     task 3: Shape of a matrix
 """
 
-
 def matrix_shape(matrix):
     """
     Returns the shape of a matrix
