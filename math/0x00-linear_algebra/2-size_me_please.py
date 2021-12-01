@@ -2,11 +2,11 @@
 """
     task 3: Shape of a matrix
 """
-import numpy as np
 
 def matrix_shape(matrix):
     """
     Returns the shape of a matrix
     """
+    import numpy as np
     new_matrix = np.array(matrix)
     return list(new_matrix.shape)
