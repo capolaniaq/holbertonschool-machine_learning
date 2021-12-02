@@ -1,7 +1,6 @@
 #!/us/bin/env python3
-
 """
-    Task 5: Getting cozy
+    Task 7: Getting cozy
 """
 
 
