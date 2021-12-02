@@ -17,4 +17,6 @@ def cat_matrices2D(mat1, mat2, axis=0):
     elif axis == 1:
         if mat1.shape[0] != mat2.shape[0]:
             return None
+    elif axis > 2:
+        return None
     return np.concatenate((mat1, mat2), axis=axis).tolist()
