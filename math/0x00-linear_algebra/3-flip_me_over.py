@@ -9,4 +9,4 @@ def matrix_transpose(matrix):
         Returns the transpose of a matrix
     """
     import numpy as np
-    return np.transpose(matrix)
+    return np.transpose(matrix).tolist()
