@@ -14,4 +14,4 @@ def add_matrices2D(mat1, mat2):
     if mat1.shape != mat2.shape:
        return None
     add_matrix = mat1 + mat2
-    return add_matrix
+    return add_matrix.tolist()
