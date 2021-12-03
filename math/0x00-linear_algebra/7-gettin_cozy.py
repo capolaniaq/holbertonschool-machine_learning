@@ -9,8 +9,8 @@ def cat_matrices2D(mat1, mat2, axis=0):
     Function that Concatenates two matrices along a specific axis
     """
     import numpy as np
-    mat1 = np.array(mat1)
-    mat2 = np.array(mat2)
+    mat1 = np.array(mat1, dtype='int')
+    mat2 = np.array(mat2, dtype='int')
     if axis == 0:
         if mat1.shape[1] != mat2.shape[1]:
             return None
