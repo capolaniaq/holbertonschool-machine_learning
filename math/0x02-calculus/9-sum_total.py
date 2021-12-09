@@ -8,10 +8,9 @@ def summation_i_squared(n):
     """
     Returns the summation of the squared integers
     """
+    import numpy as np
     if type(n) is not int or n < 1:
         return None
-    squared = n*n
-    if n == 1:
-        return squared
-    else:
-        return summation_i_squared(n-1) + squared
+    sqaured = np.arange(1, n + 1)
+    summ = np.sum(sqaured ** 2)
+    return summ
