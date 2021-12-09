@@ -16,4 +16,6 @@ def poly_derivative(poly):
     for x, variable in enumerate(poly):
         if x > 0:
             derivade.append(x * variable)
+    if len(derivade) == 0:
+        return [0]
     return derivade
