@@ -8,6 +8,8 @@ def summation_i_squared(n):
     """
     Returns the summation of the squared integers
     """
+    if type(n) is not int or n < 1:
+        return None
     squared = n*n
     if n == 1:
         return squared
