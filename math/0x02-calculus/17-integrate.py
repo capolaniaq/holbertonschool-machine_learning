@@ -14,6 +14,8 @@ def poly_integral(poly, C=0):
     for x, variable in enumerate(poly):
         if x == 0:
             integrate.append(variable)
+        elif variable == 0:
+            integrate.append(0)
         else:
             integrate.append(variable / (x + 1))
     return integrate
