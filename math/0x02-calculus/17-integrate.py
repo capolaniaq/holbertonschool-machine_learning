@@ -17,5 +17,6 @@ def poly_integral(poly, C=0):
         elif variable == 0:
             integrate.append(0)
         else:
-            integrate.append(variable / (x + 1))
+            power = variable / (x + 1)
+            integrate.append(power)
     return integrate
