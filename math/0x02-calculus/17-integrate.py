@@ -15,7 +15,8 @@ def poly_integral(poly, C=0):
         if variable == 0:
             integrate.append(0)
         elif x != 0:
-            integrate.append(variable / (x + 1))
+            coeficient = variable / (x + 1)
+            integrate.append(coeficient)
         else:
             integrate.append(variable)
     return integrate
