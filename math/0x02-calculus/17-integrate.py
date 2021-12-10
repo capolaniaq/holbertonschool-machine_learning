@@ -8,7 +8,7 @@ def poly_integral(poly, C=0):
     """
         Function that calculates the integral from a function
     """
-    if type(poly) is not list or type(C) is not (int, float):
+    if type(poly) is not list or type(C) not in (int, float):
         return None
     integrate = [C]
     for x, variable in enumerate(poly):
