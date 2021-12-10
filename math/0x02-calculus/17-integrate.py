@@ -10,8 +10,10 @@ def poly_integral(poly, C=0):
     """
     if type(poly) is not list or type(C) not in (int, float):
         return None
-    if poly == [0]:
+    elif poly == [0]:
         return [C]
+    elif poly == []:
+        return None
     integrate = [C]
     for x, variable in enumerate(poly):
         if variable == 0:
