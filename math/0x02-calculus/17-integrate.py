@@ -10,17 +10,24 @@ def poly_integral(poly, C=0):
     """
     if type(poly) is not list or type(C) not in (int, float):
         return None
-    elif poly == [0]:
-        return [C]
     elif poly == []:
         return None
+    elif poly == [0]:
+        return [C]
+
     integrate = [C]
+
     for x, variable in enumerate(poly):
+        if type(variable) is not int and type(variable) is not float:
+            return None
         if variable == 0:
             integrate.append(0)
+
         elif x != 0:
             coeficient = variable / (x + 1)
             integrate.append(coeficient)
+
         else:
             integrate.append(variable)
+
     return integrate
