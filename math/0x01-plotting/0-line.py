@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
-from matplotlib import pyplot as plt
-plt.plot([1, 2, 3, 4])
-plt.ylabel('some numbers')
+import matplotlib.pyplot as plt
+
+y = np.arange(0, 11) ** 3
+plt.plot(y, 'r')
 plt.show()
