@@ -20,14 +20,14 @@ def poly_integral(poly, C=0):
     for x, variable in enumerate(poly):
         if type(variable) is not int and type(variable) is not float:
             return None
+
         if variable == 0:
             integrate.append(0)
-
-        elif x != 0:
-            coeficient = variable / (x + 1)
-            integrate.append(coeficient)
-
         else:
-            integrate.append(variable)
+            coeficient = variable / (x + 1)
+            if coeficient % 1 == 0:
+                integrate.append(int(coeficient))
+            else:
+                integrate.append(coeficient)
 
     return integrate
