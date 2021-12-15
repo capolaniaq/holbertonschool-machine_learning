@@ -29,7 +29,7 @@ class Poisson:
 
     def pmf(self, k):
         """
-        Calculates the value of the PMF
+        Probability mass function
         """
         if type(k) is not int:
             k = int(k)
@@ -42,7 +42,7 @@ class Poisson:
 
     def cdf(self, k):
         """
-        Calculates the value of the CDF
+        Cumulative distribution function
         """
         if type(k) is not int:
             k = int(k)
