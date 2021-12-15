@@ -9,7 +9,6 @@ class Poisson:
         class Poisson:
     """
 
-    pi = 3.1415926536
     e = 2.7182818285
 
     def __init__(self, data=None, lambtha=1.):
@@ -40,3 +39,16 @@ class Poisson:
         for i in range(1, k + 1):
             factorial *= i
         return (self.e**-self.lambtha)*(self.lambtha**k)/factorial
+
+    def cdf(self, k):
+        """
+        Calculates the value of the CDF
+        """
+        if type(k) is not int:
+            k = int(k)
+        if k < 0:
+            return 0
+        cdf = 0
+        for i in range(k + 1):
+            cdf += self.pmf(i)
+        return cdf
