@@ -31,6 +31,6 @@ class Exponential:
         """
         probability density function
         """
-        if x <= 0:
+        if x < 0:
             return 0
-        return (self.lambtha**-1*(self.e**(-self.lambtha**-1*x)))
+        return (self.lambtha*(self.e**(-self.lambtha*x)))
