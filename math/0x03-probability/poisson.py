@@ -32,7 +32,6 @@ class Poisson:
         """
         Calculates the value of the PMF
         """
-        from math import factorial
         if type(k) is not int:
             k = int(k)
         if k < 0:
