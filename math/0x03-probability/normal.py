@@ -32,7 +32,6 @@ class Normal:
                 self.mean = float(mean)
                 self.stddev = float(stddev)
 
-
     def z_score(self, x):
         """
         z-score of a given x-value
