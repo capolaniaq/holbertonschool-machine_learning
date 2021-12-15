@@ -9,6 +9,8 @@ class Exponential:
         Class Exponencial
     """
 
+    e = 2.7182818285
+
     def __init__(self, data=None, lambtha=1.):
         """
             Constructor
@@ -24,3 +26,11 @@ class Exponential:
                 raise ValueError("data must contain multiple values")
             else:
                 self.lambtha = float(1/(sum(data) / len(data)))
+
+    def pdf(self, x):
+        """
+        probability density function
+        """
+        if x <= 0:
+            return 0
+        return (self.lambtha*(self.e**(-self.lambtha*x)))
