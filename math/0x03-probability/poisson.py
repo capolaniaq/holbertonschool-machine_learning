@@ -8,6 +8,10 @@ class Poisson:
     """
         class Poisson:
     """
+
+    pi = 3.1415926536
+    e = 2.7182818285
+
     def __init__(self, data=None, lambtha=1.):
         """
         Class constructor
@@ -23,3 +27,14 @@ class Poisson:
                 raise ValueError("data must contain multiple values")
             else:
                 self.lambtha = float(sum(data) / len(data))
+
+    def pmf(self, k):
+        """
+        Calculates the value of the PMF
+        """
+        from math import factorial
+        if type(k) is not int:
+            k = int(k)
+        if k < 0:
+            return 0
+        return (self.e**-self.lambtha)*(self.lambtha**k)/factorial(k)
