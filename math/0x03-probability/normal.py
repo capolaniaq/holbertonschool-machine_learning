@@ -9,6 +9,9 @@ class Normal:
     Class Normal
     """
 
+    pi = 3.1415926536
+    e = 2.7182818285
+
     def __init__(self, data=None, mean=0., stddev=1.):
         """
         Constructor
@@ -43,3 +46,11 @@ class Normal:
         x_value of a given z_score
         """
         return float(self.stddev*z + self.mean)
+
+    def pdf(self, x):
+        """
+        Probability density function
+        """
+        num = self.e**(-((x - self.mean)**2)/(2*self.stddev**2))
+        den = (self.stddev*(2*self.pi)**0.5)
+        return num / den
