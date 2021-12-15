@@ -36,4 +36,7 @@ class Poisson:
             k = int(k)
         if k < 0:
             return 0
-        return (self.e**-self.lambtha)*(self.lambtha**k)/factorial(k)
+        factorial = 1
+        for i in range(1, k + 1):
+            factorial *= i
+        return (self.e**-self.lambtha)*(self.lambtha**k)/factorial
