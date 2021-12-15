@@ -14,9 +14,9 @@ class Exponential:
             Constructor
         """
         if data is None:
-            if lambtha < 0:
+            if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
-            self.lambtha = float(lambtha) + 1
+            self.lambtha = float(lambtha)
         else:
             if type(data) is not list:
                 raise TypeError("data must be a list")
