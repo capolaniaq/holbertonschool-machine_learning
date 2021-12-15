@@ -54,3 +54,11 @@ class Normal:
         num = self.e**(-((x - self.mean)**2)/(2*self.stddev**2))
         den = (self.stddev*(2*self.pi)**0.5)
         return num / den
+
+    def cdf(self, x):
+        """
+        Cumulative distribution function
+        """
+        x = (x - self.mean)/(self.stddev*(2)**0.5)
+        erf = (2/(self.pi)**0.5)*(x - x**3/3 + x**5/10 - x**7/42 + x**9/216)
+        return 0.5*(1 + erf)
