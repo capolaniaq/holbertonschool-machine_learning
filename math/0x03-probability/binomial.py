@@ -13,7 +13,7 @@ class Binomial:
         """
         Constructor
         """
-        if type(data) is not list:
+        if type(data) is None:
             if n <= 0:
                 raise ValueError("n must be a positive value")
             elif p <= 0 or p > 1:
