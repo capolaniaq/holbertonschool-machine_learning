@@ -35,4 +35,4 @@ class Binomial:
                 q = variance / mean
                 self.p = 1 - q
                 self.n = round(mean / self.p)
-                self.p  = mean / self.n
+                self.p = mean / self.n
