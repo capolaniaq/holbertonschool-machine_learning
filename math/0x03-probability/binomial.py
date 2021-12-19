@@ -32,6 +32,7 @@ class Binomial:
                 for i in data:
                     variance += (i - mean) ** 2
                 variance = variance/len(data)
-                self.p = 1 - (variance / mean)
+                q = variance / mean
+                self.p = 1 - q
                 self.n = round(mean / self.p)
-                self.p = mean / self.n
+                self.p  = mean / self.n
