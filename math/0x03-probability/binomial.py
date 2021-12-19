@@ -43,7 +43,7 @@ class Binomial:
         """
         if type(k) is not int:
             k = int(k)
-        if k <= 0:
+        if k < 0:
             return 0
         n_x = (factorial(self.n) / (factorial(k) * factorial(self.n - k)))
         pms = n_x * (self.p ** k) * ((1 - self.p) ** (self.n - k))
