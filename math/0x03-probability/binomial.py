@@ -36,3 +36,27 @@ class Binomial:
                 self.p = 1 - q
                 self.n = round(mean / self.p)
                 self.p = mean / self.n
+
+    def pmf(self, k):
+        """
+        Probability mass function
+        """
+        if type(k) is not int:
+            k = int(k)
+        if k <= 0:
+            return 0
+        n_x = (factorial(self.n) / (factorial(k) * factorial(self.n - k)))
+        pms = n_x * (self.p ** k) * ((1 - self.p) ** (self.n - k))
+        return pms
+
+
+def factorial(n):
+    """
+    Factorial function
+    """
+    if n < 0:
+        raise ValueError("n must be a positive value")
+    elif n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
