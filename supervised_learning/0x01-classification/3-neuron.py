@@ -57,4 +57,3 @@ class Neuron:
         """
         cost = -(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A)).mean()
         return cost
-
