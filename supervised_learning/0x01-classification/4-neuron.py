@@ -65,5 +65,3 @@ class Neuron:
         A = self.forward_prop(X)
         cost = self.cost(Y, A)
         return A, cost
-
-
