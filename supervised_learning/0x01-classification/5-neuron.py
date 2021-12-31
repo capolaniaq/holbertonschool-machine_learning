@@ -47,7 +47,7 @@ class Neuron:
         """
         Calculates the forward propagation of the neuron
         """
-        Z = np.dot(self.__W, X) + self.__b
+        Z = np.matmul(self.__W, X) + self.__b
         self.__A = 1 / (1 + np.exp(-Z))
         return self.__A
 
@@ -73,7 +73,7 @@ class Neuron:
         """
         m = X.shape[1]
         dz = A - Y
-        dw = (1 / m) * np.dot(X, dz.T)
+        dw = (1 / m) * np.matmul(X, dz.T)
         db = (1 / m) * dz.sum()
         self.__W = self.__W - alpha * dw.T
         self.__b = self.__b - alpha * db
