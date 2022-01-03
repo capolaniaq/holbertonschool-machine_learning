@@ -4,7 +4,6 @@ Module to create a Neuron class
 """
 
 import numpy as np
-from numpy.core.records import format_parser
 
 
 class NeuralNetwork:
