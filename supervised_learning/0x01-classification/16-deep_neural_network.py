@@ -19,9 +19,11 @@ class DeepNeuralNetwork:
             raise TypeError("nx must be an integer")
         if nx < 1:
             raise ValueError("nx must be a positive integer")
+        if type(layers) is not list:
+            raise TypeError("layers must be a list of positive integers")
         if any(list(map(lambda x: x <= 0, layers))):
             raise TypeError('layers must be a list of positive integers')
-        if len(layers) == 0 or type(layers) is not list:
+        if len(layers) == 0:
             raise TypeError("layers must be a list of positive integers")
         self.L = len(layers)
         self.cache = {}
