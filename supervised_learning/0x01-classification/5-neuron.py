@@ -69,13 +69,11 @@ class Neuron:
 
     def gradient_descent(self, X, Y, A, alpha=0.05):
         """
-        Gradient descent function
-        X input data
-        Y is correct input labels
-        A is the activation function output
-        Alpha = learning rate
+        Calcules the Gradient descent
         """
+        m = Y.shape[1]
         dz = A - Y
-        dw = np.matmul(X, dz.T)
-        self.__W = self.__W - alpha * dw.T
-        self.__b = self.__b - alpha * dz.mean()
+        dw = (1 / m) * np.matmul(X, dz.T)
+        db = (1 / m) * np.sum(dz)
+        self.__W = self.__W - (alpha * dw.T)
+        self.__b = self.__b - (alpha * db)
