@@ -2,7 +2,6 @@
 """
 Create a first layer of a new project.
 """
-from tensorflow.keras import initializers
 import tensorflow as tf
 
 
