@@ -9,4 +9,4 @@ def calculate_accuracy(y, y_pred):
     """
     Calculate ocurracy function
     """
-    return tf.metrics.accuracy(y, y_pred)
+    return tf.reduce_mean(tf.square(y - y_pred))
