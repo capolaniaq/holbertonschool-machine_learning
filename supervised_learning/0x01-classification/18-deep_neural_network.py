@@ -74,8 +74,12 @@ class DeepNeuralNetwork:
         for i in range(self.__L):
             key = 'A{}'.format(i + 1)
             if i == 0:
-                z = np.matmul(self.__weights["W" + str(i + 1)], X) + self.__weights["b" + str(i + 1)]
+                z = np.matmul(self.__weights["W\
+                    " + str(i + 1)], X) + self.__weights["b\
+                    " + str(i + 1)]
             else:
-                z = np.matmul(self.__weights["W" + str(i + 1)], self.__cache['A' + str(i)]) + self.__weights["b" + str(i + 1)]
+                z = np.matmul(self.__weights["W\
+                    " + str(i + 1)], self.__cache['A\
+                        ' + str(i)]) + self.__weights["b" + str(i + 1)]
             self.__cache[key] = 1 / (1 + np.exp(-z))
         return self.__cache["A" + str(self.__L)], self.__cache
