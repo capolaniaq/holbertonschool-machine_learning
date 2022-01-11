@@ -109,10 +109,14 @@ class DeepNeuralNetwork:
         alpha = learning rate
         """
         m = Y.shape[1]
-        for i in range(self.__L):
-            dz = self.__cache['A' + str(i + 1)] - Y
-            dw = 1 / m * np.matmul(self.__cache['A' + str(i)], dz.T)
-            weight = self.__weights['W' + str(i + 1)]
-            bais = self.__weights['b' + str(i + 1)]
-            self.__weights["W" + str(i + 1)] = weight - alpha * dw.T
-            self.__weights["b" + str(i + 1)] = bais - alpha * dz.mean()
+        weights = self.__weights.copy()
+        for i in range(self.__L, 0, -1):
+            A = cache['A' + str(i)]
+            if i == self.__L:
+                dz = A - Y
+            else:
+                dz = np.matmul(weights['W' + str(i + 1)].T, dz) * (A * (1 - A))
+            dw = 1 / m * np.matmul(dz, cache['A' + str(i - 1)].T)
+            db = 1 / m * np.sum(dz, axis=1, keepdims=True)
+            self.__weights["W" + str(i)] = weights['W' + str(i)] - alpha * dw
+            self.__weights["b" + str(i)] = weights['b' + str(i)] - alpha * db
