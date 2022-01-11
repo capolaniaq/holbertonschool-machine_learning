@@ -147,6 +147,8 @@ class NeuralNetwork:
                     print("Cost after {} iterations: {}".format(i, self.cost(Y, self.__A2)))
                 elif i % step == 0:
                     print("Cost after {} iterations: {}".format(i, self.cost(Y, self.__A2)))
+                elif i == iterations:
+                    print("Cost after {} iterations: {}".format(i, self.cost(Y, self.__A2)))
             if graph is True:
                 x.append(i)
                 y.append(self.cost(Y, self.__A2))

@@ -115,6 +115,8 @@ class Neuron:
                     print("Cost after {} iterations: {}".format(i, self.cost(Y, self.__A)))
                 elif i % step == 0:
                     print("Cost after {} iterations: {}".format(i, self.cost(Y, self.__A)))
+                elif i == iterations:
+                    print("Cost after {} iterations: {}".format(i, self.cost(Y, self.__A)))
             if graph is True:
                 x.append(i)
                 y.append(self.cost(Y, self.__A))
