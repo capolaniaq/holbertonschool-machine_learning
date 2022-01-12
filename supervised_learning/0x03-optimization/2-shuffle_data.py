@@ -10,7 +10,7 @@ def shuffle_data(X, Y):
     shuffles the data points in two matrices
     """
     m = X.shape[0]
-    permutation = list(np.random.permutation(m))
-    shuffled_X = X[permutation, :]
-    shuffled_Y = Y[permutation, :]
+    permutation = np.random.permutation(m)
+    shuffled_X = X[permutation]
+    shuffled_Y = Y[permutation]
     return shuffled_X, shuffled_Y
