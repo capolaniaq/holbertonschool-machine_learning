@@ -11,6 +11,7 @@ def shuffle_data(X, Y):
     """
     m = X.shape[0]
     permutation = np.random.permutation(m)
-    shuffled_X = X[permutation]
-    shuffled_Y = Y[permutation]
+    print(permutation)
+    shuffled_X = X[permutation, :]
+    shuffled_Y = Y[permutation, :]
     return shuffled_X, shuffled_Y
