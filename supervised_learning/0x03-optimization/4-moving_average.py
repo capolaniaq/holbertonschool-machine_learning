@@ -13,10 +13,10 @@ def moving_average(data, beta):
     """
     if beta < 0 or beta > 1:
         return None
+    vt = 0
     m_avg = []
     for i in range(len(data)):
-        if i == 0:
-            m_avg.append(data[i])
-        else:
-            m_avg.append(beta * m_avg[i - 1] + (1 - beta) * data[i])
+        vt = beta * vt + (1 - beta) * data[i]
+        bias = 1 - beta ** (i + 1)
+        m_avg.append(vt / bias)
     return m_avg
