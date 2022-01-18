@@ -3,7 +3,7 @@
 Create a confusion matrix for a given model.
 """
 
-import numpy  as np
+import numpy as np
 
 
 def create_confusion_matrix(labels, logits):
