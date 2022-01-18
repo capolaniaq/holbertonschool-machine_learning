@@ -6,8 +6,8 @@ precision calulation
 import numpy as np
 
 
-def sensitivity(confusion):
+def precision(confusion):
     """
-    Calculate the precision of a confusion matrix.
+    calculates the precision for each class in a confusion matrix:
     """
     return np.diag(confusion) / np.sum(confusion, axis=0)
