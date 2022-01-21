@@ -15,6 +15,8 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     alpha = is a learning rate
     Lambtha = is a L2 parameter
     L = Number of layers
+    The neural network uses tanh activations on each layer except the last, which uses a softmax activation
+    The weights and biases of the network should be updated in place
     """
     m = Y.shape[1]
     weights_cop = weights.copy()
@@ -23,7 +25,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         if i == L:
             dz = A - Y
         else:
-            dz = np.matmul(weights_cop['W' + str(i + 1)].T, dz) * (A * (1 - A))
+            dz = np.matmul(weights_cop['W' + str(i + 1)].T, dz) * (1 - ( A * A))
         l2 = (lambtha * weights_cop['W' + str(i)]) / m
         dw = 1 / m * np.matmul(dz, cache['A' + str(i - 1)].T) + l2
         db = 1 / m * np.sum(dz, axis=1, keepdims=True)
