@@ -10,5 +10,5 @@ def l2_reg_cost(cost):
     """
     Calculate the lost function with tensorflow
     """
-    cost = cost + tf.losses.get_regularization_loss()
-    return cost
+    cost_l2 = cost + tf.losses.get_regularization_losses()
+    return cost_l2
