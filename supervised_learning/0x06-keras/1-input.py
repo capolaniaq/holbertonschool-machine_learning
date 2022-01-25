@@ -22,15 +22,12 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     for i in range(len(layers)):
         if i == 0:
             x = Keras.layers.Dense(layers[i], activation=activations[i],
-                                   kernel_regularizer=L2, name='dense')(input)
+                                   kernel_regularizer=L2)(input)
         elif i == len(layers) - 1:
-            output = Keras.layers.Dense(layers[i], activation=activations[i],
-                                        kernel_regularizer=L2)(x)
+            output = Keras.layers.Dense(layers[i], activation=activations[i], kernel_regularizer=L2)(x)
         else:
-            x = Keras.layers.Dense(layers[i], activation=activations[i],
-                                   kernel_regularizer=L2,
-                                   name='dense_' + str(i))(x)
-        if i != len(layers) - 1:
             x = Keras.layers.Dropout(1 - keep_prob)(x)
-    model = Keras.models.Model(inputs=input, outputs=output)
+            x = Keras.layers.Dense(layers[i], activation=activations[i],
+                                   kernel_regularizer=L2)(x)
+    model = Keras.Model(inputs=input, outputs=output)
     return model
