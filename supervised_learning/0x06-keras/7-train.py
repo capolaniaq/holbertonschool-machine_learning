@@ -32,7 +32,6 @@ def train_model(network, data, labels, batch_size, epochs,
             (1 + decay_rate * epoch), verbose=1)
         callback.append(lr_decay)
 
-
     history = network.fit(
         x=data,
         y=labels,
