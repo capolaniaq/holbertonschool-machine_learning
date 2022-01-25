@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 build a neural network with the Keras library
 """
