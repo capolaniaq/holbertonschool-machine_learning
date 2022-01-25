@@ -18,18 +18,18 @@ def train_model(network, data, labels, batch_size, epochs,
     patience is the patience used for early stoppin
     """
     callback = None
-    if validation_data != None and early_stopping != False:
-        callback = [K.callbacks.EarlyStopping(
+    if validation_data is not None and early_stopping is not False:
+        callback = K.callbacks.EarlyStopping(
             monitor='val-loses',
             patience=patience
-        )]
+        )
     history = network.fit(
         x=data,
         y=labels,
         batch_size=batch_size,
         epochs=epochs,
         validation_data=validation_data,
-        callbacks=callback,
+        callbacks=[callback],
         verbose=verbose,
         shuffle=shuffle
     )
