@@ -3,7 +3,7 @@
 sets up Adam optimization for a keras model with
 categorical crossentropy loss and accuracy metrics
 """
-import tensorflow as tf
+import tensorflow.keras as K
 
 
 def optimize_model(network, alpha, beta1, beta2):
@@ -13,9 +13,9 @@ def optimize_model(network, alpha, beta1, beta2):
     beta1 is the first Adam optimization parameter
     beta2 is the second Adam optimization parameter
     """
-    adam = tf.keras.optimizers.Adam(learning_rate=alpha,
+    adam = K.optimizers.Adam(learning_rate=alpha,
                                     beta_1=beta1, beta_2=beta2)
     network.compile(
                     optimizer=adam,
-                    loss=tf.keras.losses.CategoricalCrossentropy(),
-                    metrics=[tf.keras.metrics.CategoricalAccuracy()])
+                    loss=K.losses.CategoricalCrossentropy(),
+                    metrics=[K.metrics.CategoricalAccuracy()])
