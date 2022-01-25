@@ -24,12 +24,12 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
             x = Keras.layers.Dense(layers[i], activation=activations[i],
                                    kernel_regularizer=L2)(input)
         elif i == len(layers) - 1:
-            x = Keras.layers.Dropout(1 - keep_prob)(x)
+            d = Keras.layers.Dropout(1 - keep_prob)(x)
             output = Keras.layers.Dense(layers[i], activation=activations[i],
-                                        kernel_regularizer=L2)(x)
+                                        kernel_regularizer=L2)(d)
         else:
-            x = Keras.layers.Dropout(1 - keep_prob)(x)
+            d = Keras.layers.Dropout(1 - keep_prob)(x)
             x = Keras.layers.Dense(layers[i], activation=activations[i],
-                                   kernel_regularizer=L2)(x)
+                                   kernel_regularizer=L2)(d)
     model = Keras.Model(inputs=input, outputs=output)
     return model
