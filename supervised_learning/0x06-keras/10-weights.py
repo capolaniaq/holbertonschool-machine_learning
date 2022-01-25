@@ -16,6 +16,7 @@ def save_weights(network, filename, save_format='h5'):
     """
     network.save_weights(filename, save_format=save_format)
 
+
 def load_weights(network, filename):
     """
     loads a model weights:
