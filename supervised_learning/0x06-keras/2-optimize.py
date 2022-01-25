@@ -14,8 +14,8 @@ def optimize_model(network, alpha, beta1, beta2):
     beta2 is the second Adam optimization parameter
     """
     adam = K.optimizers.Adam(learning_rate=alpha,
-                                    beta_1=beta1, beta_2=beta2)
+                             beta_1=beta1, beta_2=beta2)
     network.compile(
                     optimizer=adam,
-                    loss=K.losses.CategoricalCrossentropy(),
-                    metrics=[K.metrics.CategoricalAccuracy()])
+                    loss="categorical_crossentropy",
+                    metrics=["accuracy"])
