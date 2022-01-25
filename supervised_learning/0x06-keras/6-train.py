@@ -20,7 +20,7 @@ def train_model(network, data, labels, batch_size, epochs,
     callback = None
     if validation_data != None and early_stopping != False:
         callback = [K.callbacks.EarlyStopping(
-            monitor='loss',
+            monitor='val-loses',
             patience=patience
         )]
     history = network.fit(
@@ -29,7 +29,7 @@ def train_model(network, data, labels, batch_size, epochs,
         batch_size=batch_size,
         epochs=epochs,
         validation_data=validation_data,
-        callbacks=[callback],
+        callbacks=callback,
         verbose=verbose,
         shuffle=shuffle
     )
