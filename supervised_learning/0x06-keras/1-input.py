@@ -3,7 +3,7 @@
 build a neural network with the Keras library
 """
 
-import tensorflow.keras as Keras
+import tensorflow.keras as K
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
@@ -17,19 +17,15 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     keep_prob is the probability that a node will be kept for dropout
     You are not allowed to use the Sequential class
     """
-    input = Keras.Input(shape=(nx, ))
-    L2 = Keras.regularizers.L2(lambtha)
+    input = K.Input(shape=(nx, ))
+    L2 = K.regularizers.L2(lambtha)
     for i in range(len(layers)):
         if i == 0:
-            x = Keras.layers.Dense(layers[i], activation=activations[i],
+            x = K.layers.Dense(layers[i], activation=activations[i],
                                    kernel_regularizer=L2)(input)
-        elif i == len(layers) - 1:
-            d = Keras.layers.Dropout(1 - keep_prob)(x)
-            output = Keras.layers.Dense(layers[i], activation=activations[i],
-                                        kernel_regularizer=L2)(d)
         else:
-            d = Keras.layers.Dropout(1 - keep_prob)(x)
-            x = Keras.layers.Dense(layers[i], activation=activations[i],
+            d = K.layers.Dropout(1 - keep_prob)(x)
+            x = K.layers.Dense(layers[i], activation=activations[i],
                                    kernel_regularizer=L2)(d)
-    model = Keras.Model(inputs=input, outputs=output)
+    model = K.Model(inputs=input, outputs=x)
     return model
