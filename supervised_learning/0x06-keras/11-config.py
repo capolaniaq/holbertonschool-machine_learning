@@ -18,6 +18,7 @@ def save_config(network, filename):
     with open(filename, 'w') as file:
         file.write(config)
 
+
 def load_config(filename):
     """
     loads a model with a specific configuration:
