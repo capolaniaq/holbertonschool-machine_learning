@@ -19,8 +19,8 @@ def convolve_grayscale_valid(images, kernel):
         kw is the width of the kernel
     """
     m = images.shape[0]
-    h = images.shape[1] - 2
-    w = images.shape[2] - 2
+    h = images.shape[1]
+    w = images.shape[2]
     kh = kernel.shape[0]
     kw = kernel.shape[1]
 
