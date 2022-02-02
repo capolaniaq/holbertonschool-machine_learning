@@ -42,18 +42,24 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
         ph, pw = 0, 0
     else:
         raise ValueError("padding must be valid or same")
-    
+
     h_new = int((h_prev + 2 * ph - kh) / sh) + 1
     w_new = int((w_prev + 2 * pw - kw) / sw) + 1
     A_new = np.zeros((m, h_new, w_new, c_new))
+
+    A_prev_pad = np.pad(A_prev,
+                        pad_width=((0, 0), (ph, ph), (pw, pw), (0, 0)),
+                        mode="constant", constant_values=0)
 
     for i in range(h_new):
         for j in range(w_new):
             for k in range(c_new):
                 x = i * sh
                 y = j * sw
-                image_slide = A_prev[:, x:x+kh, y:y+kw, :]
-                A_new[:, i, j, k] = np.sum(image_slide * W[:, :, :, k], axis=(1, 2, 3)) + b[:, :, :, k]
+                image_slide = A_prev_pad[:, x:x+kh, y:y+kw, :]
+                A_new[:, i, j, k] = np.sum(image_slide * W[:, :, :, k],
+                                           axis=(1, 2, 3)) + b[:, :, :, k]
+
     if activation is None:
         return A_new
     else:
