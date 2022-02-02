@@ -32,29 +32,30 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     """
 
     m, h_prev, w_prev, c_prev = A_prev.shape
-    kh, kw, c_prev2, c_new = W.shape
+    kh, kw, c_prev, c_new = W.shape
     sh, sw = stride
+    ph, pw = 0, 0
+    if padding == "same":
+        ph = int(((h_prev - 1) * sh + kh - h_prev) / 2)
+        pw = int(((w_prev - 1) * sw + kw - w_prev) / 2)
+    elif padding == "valid":
+        ph, pw = 0, 0
+    else:
+        raise ValueError("padding must be valid or same")
+    
+    h_new = int((h_prev + 2 * ph - kh) / sh) + 1
+    w_new = int((w_prev + 2 * pw - kw) / sw) + 1
+    A_new = np.zeros((m, h_new, w_new, c_new))
 
-    if padding == 'same':
-        ph = int((((h_prev - 1) * sh + kh - h_prev) / 2) + 1)
-        pw = int((((w_prev - 1) * sw + kw - w_prev) / 2) + 1)
-    elif padding == 'valid':
-        ph = 0
-        pw = 0
-
-    new_h = int(((h_prev - kh + (2 * ph)) / sh) + 1)
-    new_w = int(((w_prev - kw + (2 * pw)) / sw) + 1)
-
-    new_image = np.zeros((m, new_h, new_w, c_new))
-
-    for i in range(new_h):
-        for j in range(new_w):
+    for i in range(h_new):
+        for j in range(w_new):
             for k in range(c_new):
                 x = i * sh
-                y = j * sh
-                slide_image = A_prev[:, x: x + kh, y: y + kw, :]
-                new_image[:, i, j, k] = np.tensordot(slide_image,
-                                                     W[:, :, :, k],
-                                                     axes=3) + b[:, :, :, k]
-
-    return activation(new_image)
+                y = j * sw
+                image_slide = A_prev[:, x:x+kh, y:y+kw, :]
+                A_new[:, i, j, k] = np.tensordot(image_slide, W[:, :, :, k], axes=([1, 2, 3], [1, 2, 3])) + b[:, :, :, k]
+    
+    if activation is None:
+        return A_new
+    else:
+        return activation(A_new)
