@@ -1,4 +1,4 @@
-#!/isr/bin/env python3
+#!/usr/bin/env python3
 """
 Forward propagation over a pooling layer of a neural network
 """
