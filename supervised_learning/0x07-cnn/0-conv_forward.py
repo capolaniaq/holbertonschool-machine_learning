@@ -53,8 +53,7 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
                 x = i * sh
                 y = j * sw
                 image_slide = A_prev[:, x:x+kh, y:y+kw, :]
-                A_new[:, i, j, k] = np.tensordot(image_slide, W[:, :, :, k], axes=([1, 2, 3], [1, 2, 3])) + b[:, :, :, k]
-    
+                A_new[:, i, j, k] = np.sum(image_slide * W[:, :, :, k], axis=(1, 2, 3)) + b[:, :, :, k]
     if activation is None:
         return A_new
     else:
