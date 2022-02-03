@@ -62,5 +62,6 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
                     slice_a = A_prev[i, x:x+kh, y:y+kw, :]
                     dW[:, :, :, c] += slice_a * dz
                     dA_prev[i, x:x+kh, y:y+kw, :] += dz * filter
-    dA_prev = dA_prev[:, ph:-ph, pw:-pw, :]
+    if padding == 'same':
+        dA_prev = dA_prev[:, ph:-ph, pw:-pw, :]
     return dA_prev, dW, db
