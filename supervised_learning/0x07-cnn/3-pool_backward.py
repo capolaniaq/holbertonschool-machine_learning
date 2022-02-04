@@ -46,7 +46,7 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
                     if mode == 'avg':
                         dA_prev[i, x:x_end, y:y_end, ch] += dA[i,
                                                                j, k,
-                                                               ch] / (kh * kw)
+                                                               ch] /kh/kw
                     elif mode == 'max':
                         a_prev_slice = A_prev[i, x:x_end, y:y_end, ch]
                         mask = (a_prev_slice == np.max(a_prev_slice))
