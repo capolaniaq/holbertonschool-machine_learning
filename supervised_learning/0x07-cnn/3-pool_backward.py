@@ -39,8 +39,8 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
         for j in range(h_new):
             for k in range(w_new):
                 for ch in range(c):
-                    x = i * sh
-                    y = j * sw
+                    x = j * sh
+                    y = k * sw
                     x_end = x + kh
                     y_end = y + kw
                     if mode == 'avg':
