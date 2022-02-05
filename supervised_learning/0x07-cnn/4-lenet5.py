@@ -23,31 +23,32 @@ def lenet5(x, y):
         Fully connected softmax output layer with 10 nodes
     """
     initializer = tf.keras.initializers.VarianceScaling(scale=2.0)
-    y_pred = tf.layer.conv2d(x, filters=6, kernel_size=(5, 5), padding='same',
-                             activation='relu', kernel_initializer=initializer)
 
-    y_pred = tf.layer.max_pooling2d(y_pred, pool_size=(2, 2), strides=(2, 2))
+    y_pred = tf.layer.conv2d(filters=6, kernel_size=(5, 5), padding='same',
+                             activation='relu', kernel_initializer=initializer)(x)
 
-    y_pred = tf.layer.conv2d(y_pred, filters=16, kernel_size=(5, 5),
+    y_pred = tf.layer.max_pooling2d(pool_size=(2, 2), strides=(2, 2))(y_pred)
+
+    y_pred = tf.layer.conv2d(filters=16, kernel_size=(5, 5),
                              padding='valid', activation='relu',
-                             kernel_initializer=initializer)
+                             kernel_initializer=initializer)(y_pred)
 
-    y_pred = tf.layer.max_pooling2d(y_pred, pool_size=(2, 2), strides=(2, 2))
+    y_pred = tf.layer.max_pooling2d(pool_size=(2, 2), strides=(2, 2))(y_pred)
 
-    y_pred = tf.layer.flatten(y_pred)
+    y_pred = tf.layer.flatten()(y_pred)
 
-    y_pred = tf.layer.dense(y_pred, units=120, activation='relu',
-                            kernel_initializer=initializer)
+    y_pred = tf.layer.dense(units=120, activation='relu',
+                            kernel_initializer=initializer)(y_pred)
 
-    y_pred = tf.layer.dense(y_pred, units=84, activation='relu',
-                            kernel_initializer=initializer)
+    y_pred = tf.layer.dense(units=84, activation='relu',
+                            kernel_initializer=initializer)(y_pred)
 
-    y_pred = tf.layer.dense(y_pred, units=10, activation='softmax',
-                            kernel_initializer=initializer)
+    y_pred = tf.layer.dense(units=10, kernel_initializer=initializer)(y_pred)
 
     train = tf.train.AdamOptimizer()
     loss = tf.losses.softmax_cross_entropy(y, y_pred)
     train = train.minimize(loss)
     correct = tf.equal(tf.argmax(y, 1), tf.argmax(y_pred, 1))
     accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))
+    y_pred = tf.nn.softmax(y_pred)
     return y_pred, train, loss, accuracy
