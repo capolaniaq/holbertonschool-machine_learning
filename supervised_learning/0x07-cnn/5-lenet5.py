@@ -22,11 +22,10 @@ def lenet5(X):
     """
     initializer = K.initializers.HeNormal()
 
-    input = K.Input(shape=(28, 28, 1))
 
     convol_1 = K.layers.Conv2D(filters=6, kernel_size=(5, 5), padding='same',
                                activation='relu',
-                               kernel_initializer=initializer)(input)
+                               kernel_initializer=initializer)(X)
 
     sub_1 = K.layers.MaxPool2D(pool_size=(2, 2), strides=(2, 2))(convol_1)
 
@@ -45,7 +44,7 @@ def lenet5(X):
     output = K.layers.Dense(units=10, activation='softmax',
                             kernel_initializer=initializer)(dense_2)
 
-    model = K.Model(inputs=input, outputs=output)
+    model = K.Model(inputs=X, outputs=output)
 
     adam = K.optimizers.Adam()
     model.compile(optimizer=adam,
