@@ -22,7 +22,6 @@ def lenet5(X):
     """
     initializer = K.initializers.HeNormal()
 
-
     convol_1 = K.layers.Conv2D(filters=6, kernel_size=(5, 5), padding='same',
                                activation='relu',
                                kernel_initializer=initializer)(X)
