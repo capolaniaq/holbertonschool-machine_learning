@@ -20,7 +20,7 @@ def lenet5(X):
         Fully connected layer with 84 nodes
         Fully connected softmax output layer with 10 nodes
     """
-    initializer = K.initializers.VarianceScaling(scale=2.0)
+    initializer = K.initializers.HeNormal()
 
     input = K.Input(shape=(28, 28, 1))
 
