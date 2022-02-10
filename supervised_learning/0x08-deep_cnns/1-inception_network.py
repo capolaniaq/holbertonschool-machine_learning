@@ -16,17 +16,18 @@ def inception_network():
     Returns: the keras model
     """
     input = K.Input(shape=(224, 224, 3))
+    initializer = K.initializers.he_normal()
 
     conv1 = K.layers.Conv2D(filters=64, kernel_size=(7, 7), strides=(2, 2), padding='same',
-                            activation='relu')(input)
+                            activation='relu', kernel_initializer=initializer)(input)
 
     pool1 = K.layers.MaxPooling2D((3, 3), strides=(2, 2), padding='same')(conv1)
 
     conv2_R = K.layers.Conv2D(filters=64, kernel_size=(1, 1), padding='same',
-                            activation='relu')(pool1)
+                            activation='relu', kernel_initializer=initializer)(pool1)
 
     conv2 = K.layers.Conv2D(filters=192, kernel_size=(3, 3), padding='same',
-                            activation='relu')(conv2_R)
+                            activation='relu', kernel_initializer=initializer)(conv2_R)
 
     pool2 = K.layers.MaxPooling2D((3, 3), strides=(2, 2), padding='same')(conv2)
 
@@ -52,11 +53,11 @@ def inception_network():
 
     inception9 = inception_block(inception8, filters=(384, 192, 384, 48, 128, 128))
 
-    avg = K.layers.AveragePooling2D((7, 7), strides=(7,7),  padding='same')(inception9)
+    avg = K.layers.AveragePooling2D(pool_size=[7, 7], strides=(1,1),  padding='valid')(inception9)
 
     drop = K.layers.Dropout(0.4)(avg)
 
-    softmax = K.layers.Dense(units=1000, activation='softmax')(drop)
+    softmax = K.layers.Dense(units=1000, activation='softmax', kernel_initializer=initializer)(drop)
 
     model = K.models.Model(inputs=input, outputs=softmax)
 
