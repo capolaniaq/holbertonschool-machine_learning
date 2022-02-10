@@ -23,7 +23,7 @@ def inception_block(A_prev, filters):
     (Note : The output shape after the max pooling layer is
     outputshape = math.floor((inputshape - 1) / strides) + 1)
     """
-    F1, F3R, F3,F5R, F5, FPP = filters
+    F1, F3R, F3, F5R, F5, FPP = filters
     conv1 = K.layers.Conv2D(F1, kernel_size=(1, 1), padding='same',
                             activation='relu')(A_prev)
 
