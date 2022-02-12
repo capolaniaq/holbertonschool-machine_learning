@@ -59,5 +59,6 @@ def train(X_train, Y_train, X_valid, Y_valid,
                 print("\tTraining Accuracy: {}".format(acc_train))
                 print("\tValid Cost: {}".format(cost_valid))
                 print("\tValid Accuracy: {}".format(acc_valid))
-        save_path = saver.save(sess, save_path)
-    return save_path
+            if i != iterations:
+                sess.run(train, feed_dict={x: X_train, y: Y_train})
+    return saver.save(sess, save_path)
