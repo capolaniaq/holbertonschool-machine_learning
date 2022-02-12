@@ -3,7 +3,6 @@
 DenseNet-Dense Block
 """
 
-from warnings import filters
 import tensorflow.keras as K
 
 
