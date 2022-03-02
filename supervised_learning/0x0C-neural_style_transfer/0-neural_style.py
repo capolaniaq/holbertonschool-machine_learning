@@ -21,12 +21,12 @@ class NST:
         """
         error1 = "style_image must be a numpy.ndarray with shape (h, w, 3)"
         error2 = "content_image must be a numpy.ndarray with shape (h, w, 3)"
-        if not isinstance(style_image, np.ndarray) or\
+        if type(style_image) is not np.ndarray or\
            len(style_image.shape) != 3 or\
            style_image.shape[2] != 3:
             raise TypeError(error1)
 
-        if not isinstance(content_image, np.ndarray) or\
+        if type(content_image) is not np.ndarray or\
            len(content_image.shape) != 3 or\
            content_image.shape[2] != 3:
             raise TypeError(error2)
@@ -42,7 +42,6 @@ class NST:
         self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
-        self.load_model()
 
     @staticmethod
     def scale_image(image):
@@ -61,7 +60,7 @@ class NST:
         Returns: the scaled image
         """
         error = 'image must be a numpy.ndarray with shape (h, w, 3)'
-        if not isinstance(image, np.ndarray) or\
+        if type(image) is not np.ndarray or\
            len(image.shape) != 3 or\
            image.shape[2] != 3:
             raise TypeError(error)
