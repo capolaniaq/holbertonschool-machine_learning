@@ -22,13 +22,13 @@ class NST:
         if not isinstance(style_image, np.ndarray) or\
            len(style_image.shape) != 3 or\
            style_image.shape[2] != 3:
-            raise TypeError('style_image must be a numpy.ndarray \
+            raise TypeError('style_image must be a numpy.ndarray\
                             with shape (h, w, 3)')
 
         if not isinstance(content_image, np.ndarray) or\
            len(content_image.shape) != 3 or\
            content_image.shape[2] != 3:
-            raise TypeError('content_image must be a numpy.ndarray \
+            raise TypeError('content_image must be a numpy.ndarray\
                             with shape (h, w, 3)')
 
         if alpha < 0:
@@ -63,7 +63,7 @@ class NST:
             if not isinstance(image, np.ndarray) or\
                 len(image.shape) != 3 or\
                     image.shape[2] != 3:
-                raise TypeError('image must be a numpy.ndarray \
+                raise TypeError('image must be a numpy.ndarray\
                                 with shape (h, w, 3)')
             if image.shape[0] > image.shape[1]:
                 new_h = 512
