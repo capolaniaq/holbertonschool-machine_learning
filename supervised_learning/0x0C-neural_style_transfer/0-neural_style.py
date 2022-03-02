@@ -3,7 +3,6 @@
 Class NST
 """
 
-from distutils.log import error
 import tensorflow as tf
 import numpy as np
 
