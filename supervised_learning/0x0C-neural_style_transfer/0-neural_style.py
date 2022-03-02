@@ -37,8 +37,6 @@ class NST:
         if beta < 0:
             raise TypeError('beta must be a non-negative number')
 
-        tf.compat.v1.enable_eager_execution()
-
         self.style_image = self.scale_image(style_image)
         self.content_image = self.scale_image(content_image)
         self.alpha = alpha
@@ -65,15 +63,16 @@ class NST:
            len(image.shape) != 3 or\
            image.shape[2] != 3:
             raise TypeError(error)
-        if image.shape[0] > image.shape[1]:
+        h, w, c = image.shape
+        if h > w:
             new_h = 512
-            new_w = int(new_h * image.shape[1] / image.shape[0])
+            new_w = int((new_h * w) / h)
         else:
             new_w = 512
-            new_h = int(new_w * image.shape[0] / image.shape[1])
+            new_h = int((new_w * h) / w)
         image = np.expand_dims(image, axis=0)
-        image = tf.compat.v1.image.resize_bicubic(image, (new_h, new_w))
+        image = tf.image.resize(image, (new_h, new_w), method='bicubic')
         image = tf.cast(image, tf.float32)
-        image = tf.divide(image, 255)
+        image = image / 255
         image = tf.clip_by_value(image, 0, 1)
         return image
