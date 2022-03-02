@@ -37,7 +37,7 @@ class NST:
         if beta < 0:
             raise TypeError('beta must be a non-negative number')
 
-        tf.enable_eager_execution()
+        tf.compat.v1.enable_eager_execution()
 
         self.style_image = self.scale_image(style_image)
         self.content_image = self.scale_image(content_image)
@@ -72,8 +72,8 @@ class NST:
             new_w = 512
             new_h = int(new_w * image.shape[0] / image.shape[1])
         image = np.expand_dims(image, axis=0)
-        image = tf.resize_bicubic(image, (new_h, new_w))
+        image = tf.compat.v1.image.resize_bicubic(image, (new_h, new_w))
         image = tf.cast(image, tf.float32)
-        image = tf.divide(image, 255)
+        image = image / 255
         image = tf.clip_by_value(image, 0, 1)
         return image
