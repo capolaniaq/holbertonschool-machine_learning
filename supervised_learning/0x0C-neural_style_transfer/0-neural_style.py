@@ -72,7 +72,7 @@ class NST:
             new_w = 512
             new_h = int((new_w * h) / w)
         image = np.expand_dims(image, axis=0)
-        image = tf.image.resize_bicubic(image, (new_h, new_w))
+        image = tf.image.resize(image, (new_h, new_w), method='bicubic')
         image = tf.cast(image, tf.float32)
         image = image / 255
         image = tf.clip_by_value(image, 0, 1)
