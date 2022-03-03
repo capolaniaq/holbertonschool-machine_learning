@@ -21,10 +21,14 @@ class NST:
         """
         error1 = "style_image must be a numpy.ndarray with shape (h, w, 3)"
         error2 = "content_image must be a numpy.ndarray with shape (h, w, 3)"
-        if type(style_image) is not np.ndarray or len(style_image.shape) != 3 or style_image.shape[2] != 3:
+        if type(style_image) is not np.ndarray:
+            raise TypeError(error1)
+        if style_image.ndim != 3 or style_image.shape[2] != 3:
             raise TypeError(error1)
 
-        if type(content_image) is not np.ndarray or len(content_image.shape) != 3 or content_image.shape[2] != 3:
+        if type(content_image) is not np.ndarray:
+            raise TypeError(error2)
+        if content_image.ndim != 3 or content_image.shape[2] != 3:
             raise TypeError(error2)
 
         if type(alpha) is not int and type(alpha) is not float or alpha < 0:
@@ -56,7 +60,9 @@ class NST:
         Returns: the scaled image
         """
         error = 'image must be a numpy.ndarray with shape (h, w, 3)'
-        if type(image) is not np.ndarray or len(image.shape) != 3 or image.shape[2] != 3:
+        if type(image) is not np.ndarray:
+            raise TypeError(error)
+        if image.ndim != 3 or image.shape[2] != 3:
             raise TypeError(error)
         h, w, c = image.shape
         if h > w:
