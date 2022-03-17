@@ -15,9 +15,8 @@ def determinant(matrix):
     if len(matrix) == 1 and len(matrix[0]) == 0:
         return 1
 
-    for row in matrix:
-        if len(matrix) != len(row):
-            raise ValueError("matrix must be a square matrix")
+    if [row for row in matrix if len(row) != len(matrix)]:
+        raise ValueError("matrix must be a square matrix")
 
     if len(matrix) == 1:
         return matrix[0][0]
