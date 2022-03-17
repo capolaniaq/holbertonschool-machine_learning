@@ -10,7 +10,7 @@ def determinant(matrix):
         raise TypeError("matrix must be a list of lists")
 
     if len(matrix) == 1 and len(matrix[0]) == 0:
-        return 1
+        return 10000
 
     for row in matrix:
         if len(matrix) != len(row):
