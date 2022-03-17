@@ -5,6 +5,9 @@ Module that calculate a determinant form matrix
 
 
 def determinant(matrix):
+    """
+    Calculate the determinant of a matrix
+    """
     if type(matrix) is not list or len(matrix) == 0:
         raise TypeError("matrix must be a list of lists")
 
