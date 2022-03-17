@@ -3,6 +3,28 @@
 Module that calculate a determinant form matrix
 """
 
+def determinant_3x3(matrix):
+    """
+    Function that to get a matrix 3 x 3
+    and return the determinant for this
+    """
+    determinant = 0
+    if len(matrix) == 3:
+        for i, value in enumerate(matrix[0]):
+            if i == 0:
+                a = matrix[1][1] * matrix[2][2]
+                b = matrix[1][2] * matrix[2][1]
+                determinant = determinant + (value * (a - b))
+            elif i == 1:
+                a = matrix[1][0] * matrix[2][2]
+                b = matrix[1][2] * matrix[2][0]
+                determinant = determinant - (value * (a - b))
+            elif i == 2:
+                a = matrix[1][0] * matrix[2][1]
+                b = matrix[1][1] * matrix[2][0]
+                determinant = determinant + (value * (a - b))
+    return determinant
+
 
 def determinant(matrix):
     """Function that calculate a determinant from matrix"""
@@ -26,17 +48,33 @@ def determinant(matrix):
 
     determinant = 0
     if len(matrix) == 3:
-        for i, value in enumerate(matrix[0]):
+        return determinant_3x3(matrix)
+
+    matrix_3x3 = []
+    matrix_copy = matrix.copy()
+    row = matrix[0].copy()
+    if len(matrix) == 4:
+        for i, value in enumerate(row):
+            row1 = matrix[1].copy()
+            row2 = matrix[2].copy()
+            row3 = matrix[3].copy()
+            row1.pop(i)
+            row2.pop(i)
+            row3.pop(i)
+            matrix_3x3.append(row1)
+            matrix_3x3.append(row2)
+            matrix_3x3.append(row3)
             if i == 0:
-                a = matrix[1][1] * matrix[2][2]
-                b = matrix[1][2] * matrix[2][1]
-                determinant = determinant + (value * (a - b))
+                determinant = determinant + (value * determinant_3x3(matrix_3x3))
             elif i == 1:
-                a = matrix[1][0] * matrix[2][2]
-                b = matrix[1][2] * matrix[2][0]
-                determinant = determinant - (value * (a - b))
+                determinant = determinant - (value * determinant_3x3(matrix_3x3))
             elif i == 2:
-                a = matrix[1][0] * matrix[2][1]
-                b = matrix[1][1] * matrix[2][0]
-                determinant = determinant + (value * (a - b))
+                determinant = determinant + (value * determinant_3x3(matrix_3x3))
+            else:
+                determinant = determinant - (value * determinant_3x3(matrix_3x3))
+            matrix_copy = matrix.copy()
+            matrix_3x3.clear()
+
+
+
     return determinant
