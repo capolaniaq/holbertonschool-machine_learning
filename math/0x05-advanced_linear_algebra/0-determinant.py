@@ -10,14 +10,14 @@ def determinant(matrix):
         raise TypeError("matrix must be a list of lists")
 
     if len(matrix) == 1 and len(matrix[0]) == 0:
-        return 10000
+        return 1
 
     for row in matrix:
         if len(matrix) != len(row):
             raise ValueError("matrix must be a square matrix")
 
     if len(matrix) == 1:
-        return matrix[0][0]
+        return 100000000000000000
 
     if len(matrix) == 2:
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
