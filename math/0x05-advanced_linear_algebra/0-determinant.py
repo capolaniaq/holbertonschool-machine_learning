@@ -26,15 +26,9 @@ def determinant(matrix):
     if len(matrix) == 3:
         for i, value in enumerate(matrix[0]):
             if i == 0:
-                a = matrix[1][1] * matrix[2][2]
-                b = matrix[1][2] * matrix[2][1]
-                determinant = value * (a - b)
+                determinant = (value * ((matrix[1][1] * matrix[2][2]) - (matrix[1][2] * matrix[2][1])))
             elif i == 1:
-                a = matrix[1][0] * matrix[2][2]
-                b = matrix[1][2] * matrix[2][0]
-                determinant = determinant - value * (a - b)
-            elif i == 2:
-                a = matrix[1][0] * matrix[2][1]
-                b = matrix[1][1] * matrix[2][0]
-                determinant = determinant + value * (a - b)
+                determinant = determinant - (value * ((matrix[1][0] * matrix[2][2]) - (matrix[1][2] * matrix[2][0])))
+            else:
+                determinant = determinant + (value * ((matrix[1][0] * matrix[2][1]) - (matrix[1][1] * matrix[2][0])))
     return determinant
