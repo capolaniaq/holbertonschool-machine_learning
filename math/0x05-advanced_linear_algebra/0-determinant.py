@@ -4,9 +4,6 @@ Module that calculate a determinant form matrix
 """
 
 
-from xml.dom.minidom import Element
-
-
 def determinant(matrix):
     if type(matrix) is not list or len(matrix) == 0:
         raise TypeError("matrix must be a list of lists")
