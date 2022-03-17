@@ -32,7 +32,7 @@ def determinant(matrix):
             elif i == 1:
                 a = matrix[1][0] * matrix[2][2]
                 b = matrix[1][2] * matrix[2][0]
-                determinant = determinant + (value * (a - b))
+                determinant = determinant - (value * (a - b))
             elif i == 2:
                 a = matrix[1][0] * matrix[2][1]
                 b = matrix[1][1] * matrix[2][0]
