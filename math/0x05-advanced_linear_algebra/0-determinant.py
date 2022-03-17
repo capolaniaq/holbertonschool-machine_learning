@@ -6,7 +6,10 @@ Module that calculate a determinant form matrix
 
 def determinant(matrix):
     """Function that calculate a determinant from matrix"""
-    if type(matrix) is not list or type(matrix[0]) is not list:
+    if type(matrix) is not list or len(matrix) == 0:
+        raise TypeError("matrix must be a list of lists")
+
+    if type(matrix[0]) is not list:
         raise TypeError("matrix must be a list of lists")
 
     if len(matrix) == 1 and len(matrix[0]) == 0:
@@ -24,4 +27,17 @@ def determinant(matrix):
 
     determinant = 0
     if len(matrix) == 3:
-        return "determinant not implemented"
+        for i, value in enumerate(matrix[0]):
+            if i == 0:
+                a = matrix[1][1] * matrix[2][2]
+                b = matrix[1][2] * matrix[2][1]
+                determinant = determinant + (value * (a - b))
+            elif i == 1:
+                a = matrix[1][0] * matrix[2][2]
+                b = matrix[1][2] * matrix[2][0]
+                determinant = determinant - (value * (a - b))
+            elif i == 2:
+                a = matrix[1][0] * matrix[2][1]
+                b = matrix[1][1] * matrix[2][0]
+                determinant = determinant + (value * (a - b))
+    return determinant
