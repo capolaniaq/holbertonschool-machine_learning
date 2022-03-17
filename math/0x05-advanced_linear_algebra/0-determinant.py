@@ -37,7 +37,6 @@ def determinant(matrix):
             for k in range(n):
                 matrix[j][k] = matrix[j][k] - (factor * matrix[i][k])
 
-
     for i in range(n):
         determinant *= matrix[i][i]
 
