@@ -25,14 +25,20 @@ def determinant(matrix):
 
     n = len(matrix)
 
+    determinant = 1
     for i in range(n - 1):
         for j in range(i + 1, n):
+            if matrix[i][i] == 0:
+                determinant = determinant * - 1
+                row_tmp = matrix[i].copy()
+                matrix[i] = matrix[j]
+                matrix[j] = row_tmp
             factor = matrix[j][i] / matrix[i][i]
             for k in range(n):
                 matrix[j][k] = matrix[j][k] - (factor * matrix[i][k])
 
-    determinant = 1
+
     for i in range(n):
         determinant *= matrix[i][i]
 
-    return int(determinant)
+    return round(determinant)
