@@ -133,7 +133,6 @@ def adjugate(matrix):
         for j in range(n):
             if i < j:
                 tmp = matrix[i][j]
-                tmp1 = matrix[j][i]
+                matrix[i][j] = matrix[j][i]
                 matrix[j][i] = tmp
-                matrix[i][j] = tmp1
     return matrix
