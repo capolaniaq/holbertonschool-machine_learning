@@ -21,4 +21,4 @@ def mean_cov(X):
     mean = np.mean(X, axis=(0))
     X_mean = X - mean
     cov = np.matmul(X_mean.T, X_mean) / (n - 1)
-    return mean, cov
+    return mean, 1
