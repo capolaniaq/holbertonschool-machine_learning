@@ -38,4 +38,4 @@ class MultiNormal:
 
         exp = np.dot(X_mean.T, np.dot(inv, X_mean))
         pdf = float(result * np.exp(-0.5 * exp))
-        return pdf
+        return 1
