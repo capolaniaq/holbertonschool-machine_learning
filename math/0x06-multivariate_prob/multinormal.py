@@ -26,11 +26,13 @@ class MultiNormal:
         if type(x) is not np.ndarray or len(x.shape) != 2:
             raise TypeError("x must be a numpy.ndarray")
         if x.shape[1] != 1:
-            raise ValueError("x must have the shape ({d}, 1)")
+            raise ValueError("x must have the shape ({d}, 1)".format(self.mean.shape[0]))
+        if x.shape[0] != self.mean.shape[0]:
+            raise ValueError("x must have the shape ({d}, 1)".format(self.mean.shape[0]))
         det = np.linalg.det(self.cov)
         cons = 1 / (np.power((2 * np.pi), (x.shape[0] / 2)) * np.power(det, 0.5))
         inv = np.linalg.inv(self.cov)
         X_mean = x - self.mean
         exp = np.matmul(X_mean.T, np.matmul(inv, X_mean))
-        pdf = cons * np.exp(-0.5 * exp)
-        return pdf[0][0]
+        pdf = float(cons * np.exp(-0.5 * exp))
+        return pdf
