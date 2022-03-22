@@ -18,3 +18,19 @@ class MultiNormal:
         self.mean = np.mean(data, axis=1).reshape(data.shape[0], 1)
         X_mean = data - self.mean
         self.cov = np.matmul(X_mean, X_mean.T) / (data.shape[1] - 1)
+
+    def pdf(self, x):
+        """
+        Calculate a probability mass function
+        """
+        if type(x) is not np.ndarray or len(x.shape) != 2:
+            raise TypeError("x must be a numpy.ndarray")
+        if x.shape[1] != 1:
+            raise ValueError("x must have the shape ({d}, 1)")
+        det = np.linalg.det(self.cov)
+        cons = 1 / (np.power((2 * np.pi), (x.shape[0] / 2)) * np.power(det, 0.5))
+        inv = np.linalg.inv(self.cov)
+        X_mean = x - self.mean
+        exp = np.matmul(X_mean.T, np.matmul(inv, X_mean))
+        pdf = cons * np.exp(-0.5 * exp)
+        return pdf[0][0]
