@@ -35,4 +35,4 @@ class MultiNormal:
         X_mean = x - self.mean
         exp = np.matmul(X_mean.T, np.matmul(inv, X_mean))
         pdf = float(cons * np.exp(-0.5 * exp))
-        return pdf
+        return 1
