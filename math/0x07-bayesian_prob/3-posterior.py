@@ -3,7 +3,6 @@
 Posterior Probability
 """
 
-from re import M
 import numpy as np
 
 
