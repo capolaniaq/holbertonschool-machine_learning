@@ -27,6 +27,6 @@ def posterior(x, n, p1, p2):
         raise ValueError("p2 must be a float in the range [0, 1]")
     if p2 <= p1:
         raise ValueError("p2 must be greater than p1")
-    beta1 = special.btdtr(x + 1, n - x, p1)
-    beta2 = special.btdtr(x + 1, n - x, p2)
+    beta1 = special.btdtr(x + 1, n - x + 1, p1)
+    beta2 = special.btdtr(x + 1, n - x + 1, p2)
     return beta2 - beta1
