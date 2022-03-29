@@ -20,6 +20,9 @@ def pca(X, var=0.95):
     dimensionality of the transformed X
     """
     U, Sigma, Vr = np.linalg.svd(X)
-    k = np.sum(np.cumsum(Sigma) / np.sum(Sigma) < var)
-    W = Vr.T[:, :k + 1]
+    cumulative  = np.cumsum(Sigma) / np.sum(Sigma)
+    for i in range(len(cumulative)):
+        if cumulative[i] >= var:
+            break
+    W = Vr.T[:, :i + 1]
     return W
