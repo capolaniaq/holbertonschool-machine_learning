@@ -41,6 +41,9 @@ def kmeans(X, k, iterations=1000):
                 C[j] = np.random.uniform(low=low, high=high, size=(1, d))
             else:
                 C[j] = np.mean(X[clss == j], axis=0)
+        C_extend = C.reshape(k, 1, d)
+        dist = np.sqrt(np.sum(np.square(C_extend - X), axis=2))
+        clss = np.argmin(dist, axis=0)
         if np.array_equal(C, C_old):
             break
     return C, clss
