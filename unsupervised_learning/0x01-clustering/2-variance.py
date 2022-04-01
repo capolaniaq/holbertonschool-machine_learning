@@ -19,6 +19,8 @@ def variance(X, C):
         return None
     if type(C) is not np.ndarray or len(C.shape) != 2:
         return None
+    if X.shape[1] != C.shape[1]:
+        return None
     n, d = X.shape
     k, d = C.shape
     C_extend = C.reshape(k, 1, d)
