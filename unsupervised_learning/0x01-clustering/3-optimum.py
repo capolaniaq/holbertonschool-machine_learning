@@ -2,6 +2,7 @@
 """
 Check the optimum k for K-means
 """
+
 import numpy as np
 kmeans = __import__('1-kmeans').kmeans
 variance = __import__('2-variance').variance
@@ -46,6 +47,5 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     d0 = vars[0]
     d_vars = []
     for var in vars:
-        var = d0 - var
-        d_vars.append(var)
-    return results, d_vars.copy()
+        d_vars.append(d0 - var)
+    return results, d_vars
