@@ -22,7 +22,7 @@ def kmeans(X, k, iterations=1000):
     """
     if type(X) is not np.ndarray or len(X.shape) != 2:
         return None, None
-    if type(k) is not int or k < 0:
+    if type(k) is not int or k <= 0:
         return None, None
     if type(iterations) is not int and iterations <= 0:
         return None, None
