@@ -3,7 +3,6 @@
 Check the optimum k for K-means
 """
 import numpy as np
-from numpy import append
 kmeans = __import__('1-kmeans').kmeans
 variance = __import__('2-variance').variance
 
