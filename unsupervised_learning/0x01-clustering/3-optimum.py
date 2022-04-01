@@ -3,6 +3,7 @@
 Check the optimum k for K-means
 """
 import numpy as np
+from numpy import append
 kmeans = __import__('1-kmeans').kmeans
 variance = __import__('2-variance').variance
 
@@ -24,7 +25,7 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     """
     if type(X) is not np.ndarray or X.ndim != 2:
         return None, None
-    if type(kmin) is not int or kmin < 1:
+    if type(kmin) is not int or kmin <= 1:
         return None, None
     if type(kmax) is not int or kmax < 1:
         return None, None
@@ -41,11 +42,11 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         C, clss = kmeans(X, k, iterations)
         results.append(C)
         results.append(clss)
-        var = variance(X, C)
-        vars.append(var)
+        vars.append(variance(X, C))
 
+    d0 = vars[0]
     d_vars = []
     for var in vars:
-        d_vars.append(vars[0] - var)
-
-    return results, d_vars
+        var = d0 - var
+        d_vars.append(var)
+    return results, d_vars.copy()
