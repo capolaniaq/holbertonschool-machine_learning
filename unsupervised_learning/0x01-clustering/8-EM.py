@@ -54,6 +54,7 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
             break
         pi, m, S = maximization(X, g)
         l_old = l_h
+    g, l_h = expectation(X, pi, m, S)
     if verbose is True:
         print("Log Likelihood after {} iterations: {}".format(i,
               l_h.round(5)))
