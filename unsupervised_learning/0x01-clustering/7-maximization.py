@@ -22,9 +22,13 @@ def maximization(X, g):
     """
     if type(X) is not np.ndarray or X.ndim != 2:
         return None, None, None
+    if type(g) is not np.ndarray or g.ndim != 2:
+        return None, None, None
     n, d = X.shape
     k, _ = g.shape
     if g.shape[1] != n:
+        return None, None, None
+    if np.isclose([np.sum(g)], [1])[0]:
         return None, None, None
 
     S = np.zeros((k, d, d))
