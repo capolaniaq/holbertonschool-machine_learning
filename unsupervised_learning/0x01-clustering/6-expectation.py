@@ -27,11 +27,11 @@ def expectation(X, pi, m, S):
         return None, None
     if type(pi) is not np.ndarray or len(pi.shape) != 1:
         return None, None
-    if int(np.sum(pi)) != 1:
-        return None, None
     if type(m) is not np.ndarray or m.ndim != 2:
         return None, None
     if type(S) is not np.ndarray or S.ndim != 3:
+        return None, None
+    if np.isclose(np.sum(pi), 1) is False:
         return None, None
     n, d = X.shape
     k = pi.shape[0]
