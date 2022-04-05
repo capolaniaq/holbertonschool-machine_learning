@@ -47,12 +47,14 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     l_old = 0
     for i in range(iterations):
         g, l_h = expectation(X, pi, m, S)
-        pi, m, S = maximization(X, g)
-
         if verbose is True and i % 10 == 0:
-            print("Log Likelihood after {} iterations: {}".format(i, l_h))
+            print("Log Likelihood after {} iterations: {}".format(i,
+                  l_h.round(5)))
         if np.abs(l_h - l_old) <= tol:
             break
+        pi, m, S = maximization(X, g)
         l_old = l_h
-    print("Log Likelihood after {} iterations: {}".format(i, l_h))
+    if verbose is True:
+        print("Log Likelihood after {} iterations: {}".format(i,
+              l_h.round(5)))
     return pi, m, S, g, l_h
