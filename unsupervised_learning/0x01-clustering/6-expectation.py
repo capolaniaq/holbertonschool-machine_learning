@@ -25,7 +25,7 @@ def expectation(X, pi, m, S):
     """
     if type(X) is not np.ndarray or X.ndim != 2:
         return None, None
-    if type(pi) is not np.ndarray or pi.ndim != 1:
+    if type(pi) is not np.ndarray or len(pi.shape) != 1:
         return None, None
     if type(m) is not np.ndarray or m.ndim != 2:
         return None, None
