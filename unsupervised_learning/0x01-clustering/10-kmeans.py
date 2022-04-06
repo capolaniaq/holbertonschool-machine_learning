@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""K-means using scikit learn"""
+"""
+Calculate the K-means algorithm with Sk-learn.
+"""
 
 import sklearn.cluster
 
 
 def kmeans(X, k):
     """
-    performs K-means on a dataset
+    K-means algorithm.
     """
-    k_mean = sklearn.cluster.KMeans(n_clusters=k)
-    k_mean.fit(X)
-    clss = k_mean.labels_
-    C = k_mean.cluster_centers_
-
+    kmeans = sklearn.cluster.KMeans(n_clusters=k)
+    kmeans.fit(X)
+    C = kmeans.cluster_centers_
+    clss = kmeans.labels_
     return C, clss
