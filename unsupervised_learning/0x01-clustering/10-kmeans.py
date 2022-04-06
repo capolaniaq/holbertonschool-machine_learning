@@ -3,7 +3,6 @@
 Calculate the K-means algorithm with Sk-learn.
 """
 
-import numpy as np
 import skelarn.cluster
 
 
