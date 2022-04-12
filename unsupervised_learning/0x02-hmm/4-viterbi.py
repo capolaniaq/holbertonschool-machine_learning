@@ -10,7 +10,7 @@ def viterbi(Observation, Emission, Transition, Initial):
     Observation is a numpy.ndarray of shape (T,) that contains the index
     of the observation
     T is the number of observations
-    Emission is a numpy.ndarray of shape (N, M) containing the emission 
+    Emission is a numpy.ndarray of shape (N, M) containing the emission
     probability of a specific observation given a hidden state
     Emission[i, j] is the probability of observing j given the hidden state i
     N is the number of hidden states
