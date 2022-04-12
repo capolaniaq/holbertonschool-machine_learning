@@ -40,9 +40,9 @@ def backward(Observation, Emission, Transition, Initial):
             for j in range(N):
                 tr = Transition[j, :]
                 em = Emission[:, Observation[t + 1]]
-                beta[j, t] =  np.sum(beta[:, t + 1] * tr * em)
+                beta[j, t] = np.sum(beta[:, t + 1] * tr * em)
 
-        P = np.sum(beta[:, 0] * Initial * Emission[:, Observation[0]])
+        P = np.sum(beta[:, 0] * Initial[:, 0] * Emission[:, Observation[0]])
         return P, beta
 
     except Exception:
