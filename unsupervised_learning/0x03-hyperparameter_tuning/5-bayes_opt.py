@@ -77,4 +77,3 @@ class BayesianOptimization:
         else:
             opt_i = np.argmax(self.gp.Y)
         return self.gp.X[opt_i], self.gp.Y[opt_i]
-
