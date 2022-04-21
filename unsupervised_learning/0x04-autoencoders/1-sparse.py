@@ -32,14 +32,13 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     the decoder, which should use sigmoid
     """
     input_encoder = keras.Input(shape=(input_dims,))
-    l1 = keras.regularizers.L1(lambtha)
+    l1 = keras.regularizers.l1(lambtha)
 
     # Encoder
     encoder = input_encoder
     for i in range(len(hidden_layers)):
         encoder = keras.layers.Dense(hidden_layers[i],
-                                     activation='relu',
-                                     activity_regularizer=l1)(encoder)
+                                     activation='relu')(encoder)
 
     latent = keras.layers.Dense(latent_dims,
                                 activation='relu',
@@ -52,12 +51,10 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     decoder = input_decoder
     for i in range(len(hidden_layers) - 1, -1, -1):
         decoder = keras.layers.Dense(hidden_layers[i],
-                                     activation='relu',
-                                     activity_regularizer=l1)(decoder)
+                                     activation='relu')(decoder)
 
     output_decoder = keras.layers.Dense(input_dims,
-                                        activation='sigmoid',
-                                        activity_regularizer=l1)(decoder)
+                                        activation='sigmoid')(decoder)
 
     decoder = keras.Model(inputs=input_decoder, outputs=output_decoder)
 
