@@ -50,10 +50,10 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         Parameters for sampling from a multivariate Gaussian
         """
         z_mean, z_log_sigma = args
-        ep = keras.backend.random_normal(shape=(keras.backend.shape(z_mean)[0],
-                                                latent_dims),
+        e = keras.backend.random_normal(shape=(keras.backend.shape(z_mean)[0],
+                                                keras.backend.shape(z_mean)[1]),
                                          mean=0., stddev=0.1)
-        return z_mean + keras.backend.exp(z_log_sigma) * ep
+        return z_mean + keras.backend.exp(z_log_sigma) * e
 
     z = keras.layers.Lambda(sampling, output_shape=(latent_dims,))(
         [z_mean, z_log_sigma])
