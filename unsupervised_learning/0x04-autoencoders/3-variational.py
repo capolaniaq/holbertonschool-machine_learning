@@ -49,15 +49,13 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         """
         Parameters for sampling from a multivariate Gaussian
         """
-        z_mean, z_log_sigma = args
+        z_mean, z_log_var = args
         batch = keras.backend.shape(z_mean)[0]
-        dims = keras.backend.int_shape(z_mean)[1]
-        ep = keras.backend.random_normal(shape=(batch, dims),
-                                         mean=0., stddev=0.1)
-        return z_mean + keras.backend.exp(z_log_sigma) * ep
+        dim = keras.backend.shape(z_mean)[1]
+        epsilon = keras.backend.random_normal(shape=(batch, dim))
+        return z_mean + keras.backend.exp(0.5 * z_log_var) * epsilon
 
-    z = keras.layers.Lambda(sampling, output_shape=(latent_dims,))(
-        [z_mean, z_log_sigma])
+    z = keras.layers.Lambda(sampling)([z_mean, z_log_sigma])
 
     latent_input = keras.layers.Input(shape=(latent_dims,))
 
@@ -81,14 +79,22 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     vae = keras.Model(inputs, outputs)
 
-    reconstruction_loss = keras.losses.binary_crossentropy(inputs, outputs)
-    reconstruction_loss *= input_dims
-    exp = keras.backend.exp(z_log_sigma)
-    kl_loss = 1 + z_log_sigma - keras.backend.square(z_mean) - exp
-    kl_loss = keras.backend.sum(kl_loss, axis=-1)
-    kl_loss *= -0.5
-    vae_loss = keras.backend.mean(reconstruction_loss + kl_loss)
-    vae.add_loss(vae_loss)
-    vae.compile(optimizer='adam', loss='binary_crossentropy')
+    def loss(y_true, y_pred):
+        """
+        Loss function for the VAE
+        """
+        reconstruction_loss = keras.losses.binary_crossentropy(
+            y_true, y_pred)
+        reconstruction_loss *= input_dims
+        kl_loss = 1 + z_log_sigma - keras.backend.square(z_mean) - \
+            keras.backend.exp(z_log_sigma)
+        kl_loss = keras.backend.sum(kl_loss, axis=-1)
+        kl_loss *= -0.5
+        vae_loss = keras.backend.mean(reconstruction_loss + kl_loss)
+        return vae_loss
+
+    vae.compile(optimizer='adam', loss=loss)
+
+    return encoder, decoder, vae
 
     return encoder, decoder, vae
