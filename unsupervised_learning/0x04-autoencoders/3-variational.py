@@ -77,7 +77,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     decoder = keras.Model(latent_input, output_decoder)
 
-    outputs = decoder(encoder(inputs)[2])
+    outputs = decoder(encoder(inputs)[-1])
 
     vae = keras.Model(inputs, outputs)
 
