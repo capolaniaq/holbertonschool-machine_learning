@@ -51,11 +51,13 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         """
         z_mean, z_log_var = args
         batch = keras.backend.shape(z_mean)[0]
-        dim = keras.backend.shape(z_mean)[1]
+        dim = keras.backend.int_shape(z_mean)[1]
         epsilon = keras.backend.random_normal(shape=(batch, dim))
         return z_mean + keras.backend.exp(0.5 * z_log_var) * epsilon
 
-    z = keras.layers.Lambda(sampling)([z_mean, z_log_sigma])
+    z = keras.layers.Lambda(sampling,
+                            output_shape=(latent_dims, ))([z_mean,
+                                                           z_log_sigma])
 
     latent_input = keras.layers.Input(shape=(latent_dims,))
 
@@ -71,7 +73,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     output_decoder = keras.layers.Dense(input_dims,
                                         activation='sigmoid')(decoder)
 
-    encoder = keras.Model(inputs, [z_mean, z_log_sigma, z])
+    encoder = keras.Model(inputs, [z, z_mean, z_log_sigma])
 
     decoder = keras.Model(latent_input, output_decoder)
 
@@ -79,22 +81,15 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     vae = keras.Model(inputs, outputs)
 
-    def loss(y_true, y_pred):
-        """
-        Loss function for the VAE
-        """
-        reconstruction_loss = keras.losses.binary_crossentropy(
-            y_true, y_pred)
-        reconstruction_loss *= input_dims
-        kl_loss = 1 + z_log_sigma - keras.backend.square(z_mean) - \
-            keras.backend.exp(z_log_sigma)
-        kl_loss = keras.backend.sum(kl_loss, axis=-1)
-        kl_loss *= -0.5
-        vae_loss = keras.backend.mean(reconstruction_loss + kl_loss)
-        return vae_loss
+    def vae_loss(x, x_decoder_mean):
+        x_loss = keras.backend.binary_crossentropy(x, x_decoder_mean)
+        x_loss = keras.backend.sum(x_loss, axis=1)
+        kl_loss = - 0.5 * keras.backend.mean(1 + z_log_sigma -
+                                             keras.backend.square(z_mean) -
+                                             keras.backend.exp(z_log_sigma),
+                                             axis=-1)
+        return x_loss + kl_loss
 
-    vae.compile(optimizer='adam', loss=loss)
-
-    return encoder, decoder, vae
+    vae.compile(optimizer='adam', loss=vae_loss)
 
     return encoder, decoder, vae
