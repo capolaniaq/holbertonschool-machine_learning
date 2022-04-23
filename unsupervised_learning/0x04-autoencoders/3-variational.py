@@ -6,17 +6,6 @@ VAE(Variational Auto-Encoder)
 import tensorflow.keras as keras
 
 
-def sampling(args):
-    """
-    Parameters for sampling from a multivariate Gaussian
-    """
-    z_mean, z_log_sigma = args
-    ep = keras.backend.random_normal(shape=(keras.backend.shape(z_mean)[0],
-                                            2),
-                                     mean=0., stddev=0.1)
-    return z_mean + keras.backend.exp(z_log_sigma) * ep
-
-
 def autoencoder(input_dims, hidden_layers, latent_dims):
     """
     input_dims is an integer containing the dimensions of the model input
@@ -56,7 +45,18 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     z_mean = keras.layers.Dense(latent_dims, activation=None)(encoder)
     z_log_sigma = keras.layers.Dense(latent_dims, activation=None)(encoder)
 
-    z = keras.layers.Lambda(sampling)([z_mean, z_log_sigma])
+    def sampling(args):
+        """
+        Parameters for sampling from a multivariate Gaussian
+        """
+        z_mean, z_log_sigma = args
+        ep = keras.backend.random_normal(shape=(keras.backend.shape(z_mean)[0],
+                                                latent_dims),
+                                         mean=0., stddev=0.1)
+        return z_mean + keras.backend.exp(z_log_sigma) * ep
+
+    z = keras.layers.Lambda(sampling, output_shape=(latent_dims,))(
+        [z_mean, z_log_sigma])
 
     latent_input = keras.layers.Input(shape=(latent_dims,))
 
