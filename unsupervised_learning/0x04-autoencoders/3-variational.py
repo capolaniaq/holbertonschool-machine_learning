@@ -50,11 +50,10 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         Parameters for sampling from a multivariate Gaussian
         """
         z_mean, z_log_sigma = args
-        bath_size = keras.backend.shape(z_mean)[0]
-        dims = keras.backend.shape(z_mean)[1]
-
-        epsilon = keras.backend.random_normal(shape=(bath_size, dims))
-        return z_mean + keras.backend.exp(z_log_sigma / 2) * epsilon
+        ep = keras.backend.random_normal(shape=(keras.backend.shape(z_mean)[0],
+                                                latent_dims),
+                                         mean=0., stddev=0.1)
+        return z_mean + keras.backend.exp(z_log_sigma) * ep
 
     z = keras.layers.Lambda(sampling, output_shape=(latent_dims,))(
         [z_mean, z_log_sigma])
@@ -89,6 +88,6 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     kl_loss *= -0.5
     vae_loss = keras.backend.mean(reconstruction_loss + kl_loss)
     vae.add_loss(vae_loss)
-    vae.compile(optimizer='adam', loss='binary_crossentropy')
+    vae.compile(optimizer='adam', loss='vae_loss')
 
     return encoder, decoder, vae
