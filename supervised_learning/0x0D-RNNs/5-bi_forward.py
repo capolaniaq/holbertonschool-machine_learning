@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-:
+class BidirectionalCell:
 """
 
 import numpy as np
