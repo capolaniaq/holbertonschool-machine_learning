@@ -16,13 +16,15 @@ class GRUCell:
         i is the dimensionality of the data
         h is the dimensionality of the hidden state
         o is the dimensionality of the outputs
-        Creates the public instance attributes Wz, Wr, Wh, Wy, bz, br, bh, by that
+        Creates the public instance attributes Wz, Wr, Wh, Wy, bz,
+        br, bh, by that
         represent the weights and biases of the cell
             Wz and bz are for the update gate
             Wr and br are for the reset gate
             Wh and bh are for the intermediate hidden state
             Wy and by are for the output
-        The weights should be initialized using a random normal distribution in the order listed above
+        The weights should be initialized using a random normal
+        distribution in the order listed above
         The weights will be used on the right side for matrix multiplication
         The biases should be initialized as zeros
         """
