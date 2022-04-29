@@ -35,6 +35,12 @@ class GRUCell:
         self.bh = np.zeros((1, h))
         self.by = np.zeros((1, o))
 
+    def sigmoid(self, z):
+        """
+        Calculates the sigmoid activation of z
+        """
+        return 1 / (1 + np.exp(-z))
+
     def forward(self, h_prev, x_t):
         """
         x_t is a numpy.ndarray of shape (m, i) that contains the data
@@ -48,10 +54,11 @@ class GRUCell:
             y is the output of the cell
         """
         x = np.concatenate((h_prev, x_t), axis=1)
-        z = np.matmul(x, self.Wz) + self.bz
-        r = np.matmul(x, self.Wr) + self.br
+        z = self.sigmoid(np.matmul(x, self.Wz) + self.bz)
+        r = self.sigmoid(np.matmul(x, self.Wr) + self.br)
+        x = np.concatenate((r * h_prev, x_t), axis=1)
         h_hat = np.tanh(np.matmul(x, self.Wh) + self.bh)
-        h_next = (np.multiply(r, h_prev) + np.multiply(z, h_hat))
+        h_next = z * h_prev + (1 - z) * h_hat
         y = np.matmul(h_next, self.Wy) + self.by
         y = np.exp(y) / np.sum(np.exp(y), axis=1, keepdims=True)
         return h_next, y
