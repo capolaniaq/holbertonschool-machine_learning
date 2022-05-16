@@ -40,7 +40,7 @@ def uni_bleu(references, sentence):
     if c > r:
         bp = 1
     else:
-        bp = np.exp(1 - (r / c))
+        bp = np.exp(1 - (float(r) / c))
 
     blue = bp * np.exp(np.log(sum(count_grams.values()) / c))
 
