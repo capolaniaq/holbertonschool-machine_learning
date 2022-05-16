@@ -3,6 +3,7 @@
 This script is used to calculate the unigram BLEU score.
 """
 
+from unittest.util import _count_diff_all_purpose
 import numpy as np
 
 
@@ -13,37 +14,34 @@ def uni_bleu(references, sentence):
     param sentence: a hypothesis sentence
     return: the unigram BLEU score
     """
-    uni_sentence = list(set(sentence))
+    u_gram = list(set(sentence))
 
-    count_references = {}
+    count_grams = {}
 
     for reference in references:
         for word in reference:
-            if word in uni_sentence:
-                if word not in count_references:
-                    count_references[word] = reference.count(word)
+            if word in u_gram:
+                if word not in count_grams:
+                    count_grams[word] = reference.count(word)
                 else:
-                    if reference.count(word) > count_references[word]:
-                        count_references[word] = reference.count(word)
+                    if reference.count(word) > count_grams[word]:
+                        count_grams[word] = reference.count(word)
                     else:
                         pass
 
-    c = len(uni_sentence)
-
-    list_references = []
-
+    lenght_reference = []
     for reference in references:
-        ren = len(reference)
-        list_references.append((abs(ren - c)), ren)
+        lenght_reference.append(len(reference))
 
-    r = sorted(list_references, key=lambda x: x[0])[0][1]
-    r = r[0][1]
+    r = min(lenght_reference)
+
+    c = len(u_gram)
 
     if c > r:
         bp = 1
     else:
-        bp = np.exp(1 - r / c)
+        bp = np.exp(1 - (r / c))
 
-    blue = bp * np.exp(np.log(sum(count_references.values()) / c))
+    blue = bp * np.exp(np.log(sum(count_grams.values()) / c))
 
     return blue
