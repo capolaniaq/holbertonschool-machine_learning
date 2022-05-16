@@ -13,13 +13,13 @@ def uni_bleu(references, sentence):
     param sentence: a hypothesis sentence
     return: the unigram BLEU score
     """
-    list_references = list(set(sentence))
+    uni_sentence = list(set(sentence))
 
     count_references = {}
 
     for reference in references:
         for word in reference:
-            if word in list_references:
+            if word in uni_sentence:
                 if word not in count_references:
                     count_references[word] = reference.count(word)
                 else:
@@ -28,13 +28,16 @@ def uni_bleu(references, sentence):
                     else:
                         pass
 
-    lenght_refrence = []
+    c = len(uni_sentence)
+
+    list_references = []
+
     for reference in references:
-        lenght_refrence.append(len(reference))
+        ren = len(reference)
+        list_references.append((abs(ren - c)), ren)
 
-    r = min(lenght_refrence)
-
-    c = len(list_references)
+    r = sorted(list_references, key=lambda x: x[0])[0][1]
+    r = r[0][1]
 
     if c > r:
         bp = 1
