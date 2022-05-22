@@ -23,9 +23,10 @@ class RNNDecoder(tf.keras.layers.Layer):
             batch is an integer representing the batch size
         """
         self.embedding = tf.keras.layers.Embedding(vocab, embedding)
-        self.gru = tf.keras.layers.GRU(units, return_sequences=True,
-                                       return_state=True,
-                                       recurrent_initializer='glorot_uniform')
+        self.gru = tf.keras.layers.GRU(units,
+                                       recurrent_initializer='glorot_uniform',
+                                       return_sequences=True,
+                                       return_state=True)
         self.F = tf.keras.layers.Dense(vocab)
 
         super(RNNDecoder, self).__init__()
@@ -49,9 +50,10 @@ class RNNDecoder(tf.keras.layers.Layer):
             batch, units = s_prev.shape
             attention = SelfAttention(units)
             context_vector, _ = attention(s_prev, hidden_states)
-            x = self.embedding(x)
-            x = tf.concat([tf.expand_dims(context_vector, 1), x], axis=-1)
+            embedding = self.embedding(x)
+            x = tf.concat([tf.expand_dims(context_vector, 1), embedding],
+                           axis=-1)
             output, s = self.gru(x)
-            output = tf.reshape(output, (output.shape[0], output.shape[2]))
+            output = tf.reshape(output, (-1, output.shape[2]))
             y = self.F(output)
             return y, s
