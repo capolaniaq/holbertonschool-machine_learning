@@ -14,11 +14,11 @@ def positional_encoding(max_seq_len, dm):
     Returns: a numpy.ndarray of shape (max_seq_len, dm)
         containing the positional encoding vectors
     """
-    ps_ec = np.zeros((max_seq_len, dm))
+    p = np.zeros((max_seq_len, dm))
     for i in range(max_seq_len):
         for j in range(dm):
             if j % 2 == 0:
-                ps_ec[i, j] = np.sin(i / (10000 ** (2 * j / dm)))
+                p[i, j] = np.sin(i / np.power(10000, j / dm))
             else:
-                ps_ec[i, j] = np.cos(i / (10000 ** (2 * (j - 1) / dm)))
-    return ps_ec
+                p[i, j] = np.cos(i / np.power(10000, j / dm))
+    return p
