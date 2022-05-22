@@ -20,5 +20,5 @@ def positional_encoding(max_seq_len, dm):
             if j % 2 == 0:
                 p[i, j] = np.sin(i / np.power(10000, j / dm))
             else:
-                p[i, j] = np.cos(i / np.power(10000, j / dm))
+                p[i, j] = np.cos(i / np.power(10000, (j - 1) / dm))
     return p
