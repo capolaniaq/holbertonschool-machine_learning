@@ -31,30 +31,29 @@ class RNNDecoder(tf.keras.layers.Layer):
 
         super(RNNDecoder, self).__init__()
 
-        def call(self, x, s_prev, hidden_states):
-            """
-            x is a tensor of shape (batch, 1) containing the previous
-                word in the target sequence as an index of the target
+    def call(self, x, s_prev, hidden_states):
+        """
+        x is a tensor of shape (batch, 1) containing the previous
+            word in the target sequence as an index of the target
+            vocabulary
+        s_prev is a tensor of shape (batch, units) containing
+            the previous decoder hidden state
+        hidden_states is a tensor of shape (batch, input_seq_len,
+            units) containing the outputs of the encoder
+        Returns:
+            y is a tensor of shape (batch, vocab) containing the
+                output word as a one hot vector in the target
                 vocabulary
-            s_prev is a tensor of shape (batch, units) containing
-                the previous decoder hidden state
-            hidden_states is a tensor of shape (batch, input_seq_len,
-                units) containing the outputs of the encoder
-            Returns:
-                y is a tensor of shape (batch, vocab) containing the
-                    output word as a one hot vector in the target
-                    vocabulary
-                s is a tensor of shape (batch, units) containing the new
-                    decoder hidden state
-            """
-            batch, units = s_prev.shape
-            attention = SelfAttention(units)
-            context, weights = attention(s_prev, hidden_states)
-            embeddings = self.embedding(x)
-            concat_input = tf.concat([tf.expand_dims(context, 1),
-                                    embeddings],
-                                    axis=-1)
-            outputs, hidden = self.gru(concat_input)
-            outputs = tf.reshape(outputs, (outputs.shape[0], outputs.shape[2]))
-            y = self.F(outputs)
-            return y, hidden
+            s is a tensor of shape (batch, units) containing the new
+                decoder hidden state
+        """
+        _, units = s_prev.shape
+        attention = SelfAttention(units)
+        context_vector, _ = attention(s_prev, hidden_states)
+        x = self.embedding(x)
+        x = tf.concat([tf.expand_dims(context_vector, 1), x],
+                      axis=-1)
+        output, s = self.gru(x)
+        output = tf.reshape(output, (-1, output.shape[2]))
+        y = self.F(output)
+        return y, s
