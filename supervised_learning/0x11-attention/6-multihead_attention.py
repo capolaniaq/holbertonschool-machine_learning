@@ -23,7 +23,8 @@ class MultiHeadAttention(tf.keras.layers.Layer):
             Wq - a Dense layer with dm units, used to generate the query matrix
             Wk - a Dense layer with dm units, used to generate the key matrix
             Wv - a Dense layer with dm units, used to generate the value matrix
-            linear - a Dense layer with dm units, used to generate the attention output
+            linear - a Dense layer with dm units, used to generate the attentio
+            output
         """
         self.h = h
         self.dm = dm
