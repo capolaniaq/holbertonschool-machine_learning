@@ -7,12 +7,14 @@ import tensorflow as tf
 positional_encoding = __import__('4-positional_encoding').positional_encoding
 EncoderBlock = __import__('7-transformer_encoder_block').EncoderBlock
 
+
 class Encoder(tf.keras.layers.Layer):
     """
     Class Encoder
     """
 
-    def __init__(self, N, dm, h, hidden, input_vocab, max_seq_len, drop_rate=0.1):
+    def __init__(self, N, dm, h, hidden, input_vocab,
+                 max_seq_len, drop_rate=0.1):
         """
         N - the number of blocks in the encoder
         dm - the dimensionality of the model
@@ -29,13 +31,15 @@ class Encoder(tf.keras.layers.Layer):
             positional_encoding - a numpy.ndarray of shape (max_seq_len, dm)
             containing the positional encodings
             blocks - a list of length N containing all of the EncoderBlock‘s
-            dropout - the dropout layer, to be applied to the positional encodings
+            dropout - the dropout layer, to be applied to the positional
+            encodings
         """
         self.N = N
         self.dm = dm
         self.embedding = tf.keras.layers.Embedding(input_vocab, dm)
         self.positional_encoding = self.positional_encoding(max_seq_len, dm)
-        self.blocks = [EncoderBlock(dm, h, hidden, drop_rate) for _ in range(N)]
+        self.blocks = [EncoderBlock(dm, h,
+                       hidden, drop_rate) for _ in range(N)]
         self.dropout = tf.keras.layers.Dropout(drop_rate)
 
         super(Encoder, self).__init__()
