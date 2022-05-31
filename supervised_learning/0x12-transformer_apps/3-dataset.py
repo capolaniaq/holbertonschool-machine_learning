@@ -13,17 +13,36 @@ class Dataset:
     Dataset class
     """
 
-    def __init__(self):
+    def __init__(self, batch_size, max_len):
         """
         Constructor class
         """
-        self.data_train = tfds.load('ted_hrlr_translate/pt_to_en',
-                                    split='train', as_supervised=True)
-        self.data_valid = tfds.load('ted_hrlr_translate/pt_to_en',
-                                    split='validate', as_supervised=True)
+        examples, metadata = tfds.load('ted_hrlr_translate/pt_to_en', with_info=True,
+                               as_supervised=True)
+        self.data_train, self.data_valid = examples['train'], examples['validation']
+
         tok_pt, tok_en = self.tokenize_dataset(self.data_train)
+
         self.tokenizer_pt = tok_pt
         self.tokenizer_en = tok_en
+
+        self.data_train = self.data_train.map(self.tf_encode)
+        self.data_train = self.data_train.filter(
+            lambda pt, en: tf.logical_and(tf.size(pt) <= (max_len + 2),
+                                            tf.size(en) <= (max_len + 2)))
+        self.data_train = self.data_train.cache()
+        buffer_size = metadata.splits['train'].num_examples
+        self.data_train = self.data_train.shuffle(buffer_size=buffer_size)
+        self.data_train = self.data_train.padded_batch(batch_size,
+                                                         padded_shapes=([None], [None]))
+        self.data_train = self.data_train.prefetch(tf.data.experimental.AUTOTUNE)
+
+        self.data_valid = self.data_valid.map(self.tf_encode)
+        self.data_valid = self.data_valid.filter(
+            lambda pt, en: tf.logical_and(tf.size(pt) <= (max_len + 2),
+                                            tf.size(en) <= (max_len + 2)))
+        self.data_valid = self.data_valid.padded_batch(batch_size,
+                                                       padded_shapes=([None], [None]))
 
     def tokenize_dataset(self, data):
         """
@@ -67,5 +86,21 @@ class Dataset:
                                                                 pt.numpy()) + [self.tokenizer_pt.vocab_size + 1]
         en_tokens = [self.tokenizer_en.vocab_size] + self.tokenizer_en.encode(
                                                                 en.numpy()) + [self.tokenizer_en.vocab_size + 1]
-
         return np.array(pt_tokens), np.array(en_tokens)
+
+    def tf_encode(self, pt, en):
+        """
+        Acts as a tf.function wrapper for encode
+
+        Args:
+            pt is the tf.tensor containing the Portuguese sentence
+            en is the tf.tensor containing the corresponding English sentence
+
+        Returns:
+            pt_tokens is a tf.tensor containing the Portuguese tokens
+            en_tokens is a tf.tensor. containing the English tokens
+        """
+        tok_pt, tok_en = tf.py_function(self.encode, [pt, en], [tf.int64, tf.int64])
+        tok_pt.set_shape([None])
+        tok_en.set_shape([None])
+        return tok_pt, tok_en

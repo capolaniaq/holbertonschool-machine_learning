@@ -4,6 +4,7 @@ loads and preps a dataset for machine translation
 """
 
 import tensorflow_datasets as tfds
+import tensorflow.compat.v2 as tf
 
 
 class Dataset:
