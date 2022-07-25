@@ -26,10 +26,10 @@ def availableShips(passengerCount):
 
         for i, ship in enumerate(response['results']):
             try:
-                if passengerCount <= int(ship['passengers']):
+                if passengerCount <= int(ship['passengers'].replace(',', '')):
                     ships.append(ship['name'])
             except:
-                if ship['passengers'] != 'n/a' or \
+                if ship['passengers'] != 'n/a' and \
                             ship['passengers'] != 'unknown':
                     ships.append(ship['name'])
         next = response['next']
