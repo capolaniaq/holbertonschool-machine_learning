@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """script that prints the location of a specific user"""
 
-import requests
 import sys
+import requests
 import time
 
 
 if __name__ == '__main__':
+
     response = requests.get(sys.argv[1])
     if response.status_code == 404:
         print("Not found")
