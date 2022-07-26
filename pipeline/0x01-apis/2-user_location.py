@@ -7,8 +7,7 @@ import time
 
 
 if __name__ == '__main__':
-    headers = {'Accept': 'application/vnd.github.v3+json'}
-    response = requests.get(sys.argv[1], headers=headers)
+    response = requests.get(sys.argv[1])
     if response.status_code == 404:
         print("Not found")
     elif response.status_code == 403:
