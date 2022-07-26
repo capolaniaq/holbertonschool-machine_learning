@@ -16,7 +16,7 @@ if __name__ == '__main__':
         init = int(response.headers['X-Ratelimit-Reset'])
         lim = int(time.time())
         X = int((lim - init) / 60)
-        print("Reset in {} min".format(X))
+        print("Reset in {} min".format(int(X)))
     elif response.status_code == 200:
         response = response.json()
         print(response['location'])
