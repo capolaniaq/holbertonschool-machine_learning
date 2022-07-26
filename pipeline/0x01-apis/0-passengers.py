@@ -28,7 +28,7 @@ def availableShips(passengerCount):
             try:
                 if passengerCount <= int(ship['passengers'].replace(',', '')):
                     ships.append(ship['name'])
-            except:
+            except ValueError:
                 if ship['passengers'] != 'n/a' and \
                             ship['passengers'] != 'unknown':
                     ships.append(ship['name'])
