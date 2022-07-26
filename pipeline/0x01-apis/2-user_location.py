@@ -18,5 +18,4 @@ if __name__ == '__main__':
         X = int((lim - init) / 60)
         print("Reset in {} min".format(int(X)))
     if response.status_code == 200:
-        response = response.json()
-        print(response['location'])
+        print(response.json()['location'])
