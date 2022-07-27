@@ -10,13 +10,13 @@ if __name__ == '__main__':
 
     dates = [x['date_unix'] for x in response]
 
-    #min_date = min(dates)
+    # min_date = min(dates)
 
     idx = dates.index(min(dates))
     upcoming = response[idx]
 
-    #for launch in response:
-    #    if launch['date_unix'] == min_date:
+    # for launch in response:
+    #     if launch['date_unix'] == min_date:
     #        upcoming = launch
 
     id_launchpad = upcoming['launchpad']
