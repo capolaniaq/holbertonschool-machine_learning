@@ -1,3 +1,4 @@
+-- Create function to divide two columns
 DELIMITER //
 CREATE FUNCTION SafeDiv (
         a INT,
